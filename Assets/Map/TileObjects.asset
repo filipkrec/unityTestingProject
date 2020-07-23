@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a8119f5f77674942880730f2e86d4c1, type: 3}
+  m_Name: TileObjects
+  m_EditorClassIdentifier: 
+  tileObjects:
+  - name: Boat
+    rows:
+    - tiles:
+      - {fileID: 11400000, guid: 56f648e8dfd279d4f9093066115f8e0b, type: 2}
+      - {fileID: 11400000, guid: 9021ce1657edc6149a5ab34a29ebcd81, type: 2}
+      - {fileID: 11400000, guid: 5a5a83ca7aae44f49b736ff9ba78314b, type: 2}
+      - {fileID: 11400000, guid: e985dd240d0a53047bac86352ede6135, type: 2}
+    - tiles:
+      - {fileID: 11400000, guid: f5958f0899fdffd4ca6177acd461ece8, type: 2}
+      - {fileID: 11400000, guid: 6efb1a09d540b4f44b59ebaa9c266cc2, type: 2}
+      - {fileID: 11400000, guid: 2dc9990cf1041954ea3ec726c9892dac, type: 2}
+      - {fileID: 11400000, guid: 658145991ec04d8479890eb9b57f2971, type: 2}
+  - name: Stand
+    rows:
+    - tiles:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+    - tiles:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+    - tiles:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+  - name: 
+    rows: []
+  - name: 
+    rows: []

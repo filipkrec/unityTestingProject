@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11d3f05fd9a57942a9c0160f8c73179, type: 3}
+  m_Name: Tiles
+  m_EditorClassIdentifier: 
+  tiles:
+  - tile: {fileID: 11400000, guid: 6cefdc5c2a9045242a6f82a401130f6d, type: 2}
+    name: Grass
+    collision: 0
+  - tile: {fileID: 11400000, guid: cb0e4790a7af5f847b457e661933e6e1, type: 2}
+    name: SandBag
+    collision: 1
+  - tile: {fileID: 11400000, guid: 08c29fed33309434ab6ce36f4b607e1d, type: 2}
+    name: GrassBag
+    collision: 1
+  - tile: {fileID: 11400000, guid: 60a6feaf6d2d0534182699a168aa5a08, type: 2}
+    name: PathA
+    collision: 0
+  - tile: {fileID: 11400000, guid: 7301f412f08f6e84883a52d47364afdb, type: 2}
+    name: PathB
+    collision: 0
+  - tile: {fileID: 11400000, guid: f856c4064df099c4099fdd71464a62c6, type: 2}
+    name: PathC
+    collision: 0
+  - tile: {fileID: 11400000, guid: 119f8384ee1d8c94ab103d7c56798ce6, type: 2}
+    name: DirtA
+    collision: 0
+  - tile: {fileID: 11400000, guid: 96bcc01042ffb0c4a9aafa8273ec9f71, type: 2}
+    name: DirtB
+    collision: 0
+  - tile: {fileID: 11400000, guid: 8021edfbcce71ff45a8dc2221b950b44, type: 2}
+    name: FlowerPot
+    collision: 1
