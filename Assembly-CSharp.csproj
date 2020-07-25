@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\C_TileObject.cs" />
     <Compile Include="Assets\Scripts\C_TileObjectPalette.cs" />
     <Compile Include="Assets\Scripts\C_TilePalette.cs" />
+    <Compile Include="Assets\Scripts\C_Timer.cs" />
     <Compile Include="Assets\Scripts\ChangeSlider.cs" />
     <Compile Include="Assets\Scripts\CharacterStat.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />

@@ -18,7 +18,6 @@ public class C_BasicMovement : MonoBehaviour
     public GameObject crosshair;
     public GameObject healthBar;
 
-
     // Start is called before the first frame update
     void Start()
     {
