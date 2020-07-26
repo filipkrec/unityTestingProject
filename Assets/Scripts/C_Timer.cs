@@ -12,53 +12,53 @@ public class C_Timer : MonoBehaviour
     private int repeats; // -1 = inf
     private int repeatCounter;
     private float currentTimerValue;
-    bool running = false;
+    private int precision;
+    bool running;
+    bool started;
 
     public C_Timer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
     {
         toExecute = inAction;
-        if (inTimeBeforeExecute == -1)
-        {
-            running = true;
-        }
-        else
-        {
-            timeBeforeExecute = inTimeBeforeExecute;
-            timeBetweenRepeat = inTimeBetweenRepeat;
-            repeats = inRepeats;
-            currentTimerValue = 0.0f;
-            running = true;
-            executed = false;
-        }
+        timeBeforeExecute = inTimeBeforeExecute;
+        timeBetweenRepeat = inTimeBetweenRepeat;
+        repeats = inRepeats;
+        currentTimerValue = 0.0f;
+        precision = 6;
+        running = true;
+        executed = false;
+        started = false;
     }
 
     public void initiateTimer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
     {
         toExecute = inAction;
-        if (inTimeBeforeExecute == -1)
-        {
-            running = true;
-        }
-        else
-        {
-            timeBeforeExecute = inTimeBeforeExecute;
-            timeBetweenRepeat = inTimeBetweenRepeat;
-            repeats = inRepeats;
-            currentTimerValue = 0.0f;
-            running = true;
-            executed = false;
-        }
+        timeBeforeExecute = inTimeBeforeExecute;
+        timeBetweenRepeat = inTimeBetweenRepeat;
+        repeats = inRepeats;
+        currentTimerValue = 0.0f;
+        repeatCounter = 0;
+        precision = 6;
+        running = true;
+        executed = false;
+        started = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (running == true)
+        if (running)
         {
-            currentTimerValue += Time.deltaTime;
-            if (timeBeforeExecute != -1)
+            if (!started)
             {
-                if (timeBeforeExecute <= currentTimerValue && !executed)
+                started = true;
+                repeatCounter = 0;
+            }
+
+            currentTimerValue += Time.deltaTime;
+            if ((int)timeBeforeExecute != -1)
+            {
+                if ((GetCurrentTime() >= timeBeforeExecute || timeBeforeExecute == 0)
+                    && !executed)
                 {
                     if (timeBeforeExecute == 0)
                     {
@@ -69,14 +69,14 @@ public class C_Timer : MonoBehaviour
                 }
                 else if (executed && (repeats > 0 || repeats == -1)
                     && (repeatCounter <= repeats || repeats == -1)
-                    && currentTimerValue >= (timeBeforeExecute + (repeatCounter + 1) * timeBetweenRepeat))
+                    && GetCurrentTime() >= (timeBeforeExecute + (repeatCounter + 1) * timeBetweenRepeat))
                 {
                     repeatCounter++;
                     toExecute();
                 }
 
-                if (executed && repeatCounter == repeats && repeats != -1)
-                    running = false;
+                if (executed && running && repeatCounter == repeats && repeats != -1)
+                    StopTimer();
             }
         }
     }
@@ -90,13 +90,18 @@ public class C_Timer : MonoBehaviour
     public void ResetTimer()
     {
         executed = false;
-        repeatCounter = 0;
+        started = false;
         currentTimerValue = 0.0f;
     }
 
-    public void TogglePause()
+    public void Play()
     {
-        running = !running;
+        running = true;
+    }
+
+    public void Pause()
+    {
+        running = false;
     }
 
     public void Execute()
@@ -106,11 +111,16 @@ public class C_Timer : MonoBehaviour
 
     public float GetCurrentTime()
     {
-        return currentTimerValue;
+        return (float)Math.Round(currentTimerValue,precision);
     }
 
     public int GetRepeatCount()
     {
         return repeatCounter;
+    }
+
+    public void setPrecision(int inPrecision)
+    {
+        precision = inPrecision;
     }
 }

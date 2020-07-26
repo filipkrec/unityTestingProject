@@ -18,6 +18,8 @@ public class C_BasicMovement : MonoBehaviour
     public GameObject crosshair;
     public GameObject healthBar;
 
+    public C_Timer timer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,14 @@ public class C_BasicMovement : MonoBehaviour
         {
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
         }
+        timer = gameObject.AddComponent<C_Timer>();
+        timer.initiateTimer(Test,2.0f,3,2.0f);
+        timer.setPrecision(2);
+    }
+
+    void Test()
+    {
+        Debug.Log(timer.GetCurrentTime());
     }
 
     // Update is called once per frame
@@ -51,7 +61,7 @@ public class C_BasicMovement : MonoBehaviour
 
         SetCrosshair(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
-        if (Input.GetButtonDown("Fire1")) 
+        if (Input.GetButtonDown("Fire1"))
             CharacterFire();
 
         if (Input.GetButtonDown("Test"))
