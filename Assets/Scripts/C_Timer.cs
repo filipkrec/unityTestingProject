@@ -16,7 +16,7 @@ public class C_Timer : MonoBehaviour
     bool running;
     bool started;
 
-    public C_Timer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
+    public C_Timer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = 0)
     {
         toExecute = inAction;
         timeBeforeExecute = inTimeBeforeExecute;
@@ -67,9 +67,12 @@ public class C_Timer : MonoBehaviour
                     toExecute();
                     executed = true;
                 }
-                else if (executed && (repeats > 0 || repeats == -1)
+                else if (
+                    executed
+                    && (repeats > 0 || repeats == -1)
                     && (repeatCounter <= repeats || repeats == -1)
-                    && GetCurrentTime() >= (timeBeforeExecute + (repeatCounter + 1) * timeBetweenRepeat))
+                    && (GetCurrentTime() >= (timeBeforeExecute + (repeatCounter + 1) * timeBetweenRepeat) || timeBetweenRepeat == 0)
+                    )
                 {
                     repeatCounter++;
                     toExecute();

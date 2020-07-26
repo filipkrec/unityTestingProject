@@ -37,7 +37,7 @@ public class C_BasicMovement : MonoBehaviour
 
     void Test()
     {
-        Debug.Log(timer.GetCurrentTime());
+        //Debug.Log(timer.GetCurrentTime());
     }
 
     // Update is called once per frame

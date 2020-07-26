@@ -7,10 +7,9 @@ public class ChangeSlider : MonoBehaviour
 {
     public Slider slider;
 
-    private void Start()
+    private void Awake()
     {
         slider = GetComponent<Slider>();
-        if(slider != null)
         slider.maxValue = 100;
         slider.value = 100;
     }
