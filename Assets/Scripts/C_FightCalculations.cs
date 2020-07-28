@@ -26,7 +26,7 @@ public class C_FightCalculations : MonoBehaviour
 
     private void Update()
     {
-        slider.slider.value += rate; 
+        slider.slider.value += rate;    
         FPS++;
     }
 
