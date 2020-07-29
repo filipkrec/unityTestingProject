@@ -7,6 +7,7 @@ public class C_DragAndDrop : MonoBehaviour
     private GameObject draggedObject = null;
     private Vector2 mousePos;
     private Vector2 originalPos;
+    public C_FightPlayer player;
 
     // Update is called once per frame
     void Update()
@@ -16,30 +17,7 @@ public class C_DragAndDrop : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && draggedObject == null)
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll (mousePos, Vector2.zero, 1.0f);
-
-            Debug.Log("2");
-
-            for (int i = 0; i < hits.Length; ++i)
-            {
-                if (hits[i].collider.tag == "Gem")
-                {
-                    Debug.Log("2");
-                    draggedObject = hits[i].transform.gameObject;
-                    C_Box currentBox = draggedObject.GetComponent<C_Box>();
-                    if (currentBox != null)
-                    {
-                        Debug.Log("3");
-                        if (currentBox.slotted)
-                        {
-                            currentBox.slotted = false;
-                            draggedObject.transform.localScale = currentBox.originalScale;
-                        }
-
-
-                    }
-                }
-            }
+            PickupGem();
         }
 
         if (draggedObject != null)
@@ -49,50 +27,103 @@ public class C_DragAndDrop : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && draggedObject != null)
         {
+            DropGem();
+        }
+    }
 
-            RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero, 1.0f);
-
-            C_Box currentBox = draggedObject.GetComponent<C_Box>();
-
-            for (int i = 0; i < hits.Length; ++i)
+    void PickupGem()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero, 1.0f);
+        
+        //if pickup from carrier
+        for (int i = 0; i < hits.Length; ++i)
+        {
+            if (hits[i].collider.tag == "Carrier")
             {
-                if (hits[i].collider.tag == "Carrier")
+                C_FillSlot slot = hits[i].transform.gameObject.GetComponent<C_FillSlot>();
+                if (slot != null)
                 {
-                    RaycastHit2D hit = hits[i];
+                    C_Box currentBox = slot.getBoxFromSlot();
+                    slot.fillSlot(null);
 
-                    if(currentBox != null)
+                    if (currentBox != null)
                     {
-                        if(!currentBox.slotted)
-                        {
-                            currentBox.slotted = true;
-
-                            draggedObject.transform.position = hit.collider.transform.position;
-
-                            float hitboxX = hit.transform.gameObject.GetComponent<BoxCollider2D>().size.x;
-                            float hitboxY = hit.transform.gameObject.GetComponent<BoxCollider2D>().size.y;
-
-                            float sizeY = draggedObject.GetComponent<BoxCollider2D>().size.x;
-                            float sizeX = draggedObject.GetComponent<BoxCollider2D>().size.y;
-
-                            Vector3 rescale = draggedObject.transform.localScale;
-                            Debug.Log(rescale.x);
-                            Debug.Log(rescale.y);
-
-                            rescale.x = hitboxX * rescale.x / sizeX;
-                            rescale.y = hitboxY * rescale.y / sizeY;
-
-                            draggedObject.transform.localScale = rescale;
-                        }
-                    }                                                                                                                     
+                        currentBox.ResetScale();
+                        draggedObject = currentBox.gameObject;
+                    }
+                    return;
                 }
             }
-            
-            if(!currentBox.slotted)
-            {
-                draggedObject.transform.position = currentBox.originalPosition;
-            }
+        }
 
+        //if pickup gem directly
+        for (int i = 0; i < hits.Length; ++i)
+        {
+            if (hits[i].collider.tag == "Gem")
+            {
+                draggedObject = hits[i].transform.gameObject;
+                return;
+            }
+        }
+    }
+
+    void DropGem()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero, 1.0f);
+
+        C_Box currentBox = draggedObject.GetComponent<C_Box>();
+
+        for (int i = 0; i < hits.Length; ++i)
+        {
+            if (hits[i].collider.tag == "Carrier")
+            {
+                RaycastHit2D hit = hits[i];
+                GameObject hitSlotObject = hit.transform.gameObject;
+
+                if (currentBox != null) //Box is dragged
+                {
+                    C_FillSlot slot = hitSlotObject.GetComponent<C_FillSlot>();
+                    if (slot != null)
+                    {
+                        C_Box swappedBox = slot.fillSlot(currentBox);
+
+                        if (swappedBox != null)
+                        {
+                            Debug.Log("1");
+                            swappedBox.ResetScale();
+                            swappedBox.ResetPosition();
+                        }
+
+                        currentBox.transform.position = hit.collider.transform.position;
+                        RescaleObjectToObjectByHitbox(currentBox.gameObject, hit.transform.gameObject);
+                        draggedObject = null;
+                    }
+                }
+            }
+        }
+
+        if(draggedObject != null)
+        {
+            draggedObject.transform.position = currentBox.originalPosition;
             draggedObject = null;
         }
     }
+
+
+    void RescaleObjectToObjectByHitbox(GameObject originalObject, GameObject fitObject)
+    {
+        float hitboxX = fitObject.GetComponent<BoxCollider2D>().size.x;
+        float hitboxY = fitObject.GetComponent<BoxCollider2D>().size.y;
+
+        float sizeY = originalObject.GetComponent<BoxCollider2D>().size.x;
+        float sizeX = originalObject.GetComponent<BoxCollider2D>().size.y;
+
+        Vector3 rescale = originalObject.transform.localScale;
+
+        rescale.x = hitboxX * rescale.x / sizeX;
+        rescale.y = hitboxY * rescale.y / sizeY;
+
+        originalObject.transform.localScale = rescale;
+    }
 }
+

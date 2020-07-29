@@ -69,9 +69,12 @@
     <Compile Include="Assets\Scripts\C_DestroyAfterDistance.cs" />
     <Compile Include="Assets\Scripts\C_DragAndDrop.cs" />
     <Compile Include="Assets\Scripts\C_FightCalculations.cs" />
+    <Compile Include="Assets\Scripts\C_FightPlayer.cs" />
+    <Compile Include="Assets\Scripts\C_FillSlot.cs" />
     <Compile Include="Assets\Scripts\C_Gate.cs" />
     <Compile Include="Assets\Scripts\C_GenerateTiles.cs" />
     <Compile Include="Assets\Scripts\C_MainMenu.cs" />
+    <Compile Include="Assets\Scripts\C_Spell.cs" />
     <Compile Include="Assets\Scripts\C_Tile.cs" />
     <Compile Include="Assets\Scripts\C_TileObject.cs" />
     <Compile Include="Assets\Scripts\C_TileObjectPalette.cs" />

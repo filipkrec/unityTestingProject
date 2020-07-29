@@ -20,7 +20,7 @@ public class C_FightCalculations : MonoBehaviour
         slider = (ChangeSlider)gameObject.GetComponent(typeof(ChangeSlider));
         currentClash = 50;
         slider.slider.value = 50;
-        timer.initiateTimer(calculateClash, 0, -1, 1.0f);
+        timer.initiateTimer(calculateClash, 0, -1, 0.1f);
         //timer.initiateTimer(fps, 0, -1, 1.0f);
     }
 
@@ -33,8 +33,8 @@ public class C_FightCalculations : MonoBehaviour
     private void calculateClash()
     {
         float oldValue = currentClash;
-        currentClash += (float)(playerForce - enemyForce) * 1.0f;
-        rate = (currentClash - oldValue) / 100;
+        currentClash += (float)(playerForce - enemyForce) * 0.1f;
+        rate = (currentClash - oldValue) / 10;
     }
 
     private void fps()

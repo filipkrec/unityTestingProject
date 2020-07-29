@@ -6,13 +6,11 @@ public class C_Box : MonoBehaviour
 {
     public Vector3 originalScale;
     public Vector3 originalPosition;
-    public bool slotted;
 
     void Start()
     {
         originalPosition = gameObject.transform.position;
         originalScale = gameObject.transform.localScale;
-        slotted = false;
     }
 
     // Update is called once per frame
@@ -20,4 +18,15 @@ public class C_Box : MonoBehaviour
     {
         
     }
+
+    public void ResetScale()
+    {
+        gameObject.transform.localScale = originalScale;
+    }
+
+    public void ResetPosition()
+    {
+        gameObject.transform.position = originalPosition;
+    }
+
 }
