@@ -16,6 +16,14 @@ public class C_Timer : MonoBehaviour
     bool running;
     bool started;
 
+    /// <summary>
+    ///  -1 Time before execute = infinity ;
+    ///  -1 repeats = infinite
+    /// </summary>
+    /// <param name="inAction"></param>
+    /// <param name="inTimeBeforeExecute"></param>
+    /// <param name="inRepeats"></param>
+    /// <param name="inTimeBetweenRepeat"></param>
     public C_Timer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = 0)
     {
         toExecute = inAction;
@@ -125,5 +133,14 @@ public class C_Timer : MonoBehaviour
     public void setPrecision(int inPrecision)
     {
         precision = inPrecision;
+    }
+
+    public float GetTimeLeftBeforeExecute()
+    {
+        if (timeBeforeExecute > 0 && timeBeforeExecute > currentTimerValue)
+        {
+            return timeBeforeExecute - currentTimerValue;
+        }
+        else return 0f;
     }
 }

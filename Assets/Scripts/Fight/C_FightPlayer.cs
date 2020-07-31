@@ -22,6 +22,8 @@ public class C_FightPlayer : MonoBehaviour
     {
         numberOfSlots = 5;
         slots = new C_Box[numberOfSlots];
+        numberOfSpells = 1;
+        spells = new C_Spell[numberOfSpells];
     }
 
     public C_Box getSlot(int i)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_Spell : MonoBehaviour
+public class C_ModifierStorage : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
