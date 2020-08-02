@@ -5,36 +5,36 @@ using UnityEngine;
 
 public class Sp_FreezeTime : C_Spell
 {
-    float freezeDuration = 5.0f;
 
-    Sp_FreezeTime()
+    public Sp_FreezeTime()
     {
         spellName = "Freeze Time";
-        description = "Time is frozen for" + (freezeDuration * durationModifier).ToString();
+        description = "Time is frozen for" + (duration).ToString();
         icon = null;
 
         cooldown = 15.0f;
         effectiveness = 1.0f;
-        durationModifier = 1.0f;
+        duration = 5.0f;
         target = null;
 
         backupCooldown = 15.0f;
         backupEffectiveness = 1.0f;
     }
 
-    public void Instantiate()
+    public override void Instantiate()
     {
         spellName = "Freeze Time";
-        description = "Time is frozen for" + (freezeDuration * durationModifier).ToString();
+        description = "Time is frozen for" + duration.ToString();
         icon = null;
 
         cooldown = 15.0f;
         effectiveness = 1.0f;
-        durationModifier = 1.0f;
-        target = null;
+        duration = 5.0f;
+        target = null; //set in awake
 
         backupCooldown = 15.0f;
         backupEffectiveness = 1.0f;
+        backupDuration = 5.0f;
     }
 
     private void Awake()
@@ -53,7 +53,7 @@ public class Sp_FreezeTime : C_Spell
             C_FightCalculations thisTarget = (C_FightCalculations)target;
 
             Mod_FreezeTime mod = thisTarget.gameObject.AddComponent<Mod_FreezeTime>();
-            mod.Instantiate(durationModifier);
+            mod.Instantiate(duration);
             mod.SetTarget(target);
 
             thisTarget.addModifier(mod);

@@ -2857,7 +2857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd8f606b844b4e4eb9b4c6a163988bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1501836598}
+  player: {fileID: 1828428934}
   slot: 4
 --- !u!1 &1172754101
 GameObject:
@@ -3164,7 +3164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd8f606b844b4e4eb9b4c6a163988bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1501836598}
+  player: {fileID: 1828428934}
   slot: 2
 --- !u!1 &1501836594
 GameObject:
@@ -3177,7 +3177,6 @@ GameObject:
   - component: {fileID: 1501836596}
   - component: {fileID: 1501836595}
   - component: {fileID: 1501836597}
-  - component: {fileID: 1501836598}
   m_Layer: 0
   m_Name: Carrier
   m_TagString: Carrier
@@ -3266,31 +3265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0934f3288714a5648865c547d10dca6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
---- !u!114 &1501836598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501836594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 076c406159d91c1419885217a4f0a0c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfSlots: 5
-  slots: []
-  numberOfSpells: 0
-  spells: []
-  pushForce: 0
-  pushDefence: 0
-  timeSpeedup: 0
-  timeSlowdown: 0
-  cooldownSpeedup: 0
-  cooldownSlowdown: 0
-  spellEffectivenessUp: 0
-  spellEffectivenessDown: 0
+  player: {fileID: 1828428934}
 --- !u!1 &1671073137
 GameObject:
   m_ObjectHideFlags: 0
@@ -3378,7 +3353,6 @@ GameObject:
   - component: {fileID: 1736994219}
   - component: {fileID: 1736994218}
   - component: {fileID: 1736994217}
-  - component: {fileID: 1736994221}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -3479,26 +3453,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1736994221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736994215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c31bd7548df8f0a438255c4cc2e9ec99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  spellButtons:
-  - {fileID: 2032654364}
-  - {fileID: 65320572}
-  - {fileID: 668673403}
-  - {fileID: 1946168606}
-  - {fileID: 718685249}
-  buttonCount: 5
 --- !u!1 &1766712612
 GameObject:
   m_ObjectHideFlags: 0
@@ -3634,6 +3588,7 @@ GameObject:
   - component: {fileID: 1828428936}
   - component: {fileID: 1828428935}
   - component: {fileID: 1828428934}
+  - component: {fileID: 1828428937}
   m_Layer: 0
   m_Name: FightActors
   m_TagString: FightActors
@@ -3669,7 +3624,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfSlots: 0
   slots: []
-  numberOfSpells: 0
   spells: []
   pushForce: 0
   pushDefence: 0
@@ -3707,6 +3661,25 @@ MonoBehaviour:
   rateModifier: 0
   currentClash: 0
   slider: {fileID: 1968973340}
+--- !u!114 &1828428937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828428932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31bd7548df8f0a438255c4cc2e9ec99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1828428934}
+  spellButtons:
+  - {fileID: 2032654364}
+  - {fileID: 65320572}
+  - {fileID: 668673403}
+  - {fileID: 1946168606}
+  - {fileID: 718685249}
 --- !u!1 &1890103420
 GameObject:
   m_ObjectHideFlags: 0
@@ -4048,7 +4021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd8f606b844b4e4eb9b4c6a163988bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1501836598}
+  player: {fileID: 1828428934}
   slot: 3
 --- !u!1 &1968973338
 GameObject:
@@ -4208,7 +4181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd8f606b844b4e4eb9b4c6a163988bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1501836598}
+  player: {fileID: 1828428934}
   slot: 0
 --- !u!1 &2008455397
 GameObject:
@@ -4300,7 +4273,6 @@ GameObject:
   - component: {fileID: 2032654366}
   - component: {fileID: 2032654365}
   - component: {fileID: 2032654364}
-  - component: {fileID: 2032654367}
   m_Layer: 0
   m_Name: Spell1
   m_TagString: Untagged
@@ -4371,7 +4343,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2032654367}
+      - m_Target: {fileID: 0}
         m_MethodName: Cast
         m_Mode: 1
         m_Arguments:
@@ -4401,7 +4373,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4419,27 +4391,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032654362}
   m_CullTransparentMesh: 0
---- !u!114 &2032654367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2032654362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28b5a301a468ce445aab76e3cb9e27aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spellName: Freeze Time
-  description: Time is frozen for0
-  icon: {fileID: 0}
-  cooldown: 15
-  effectiveness: 1
-  durationModifier: 1
-  target: {fileID: 0}
-  backupCooldown: 0
-  backupEffectiveness: 0
 --- !u!1 &2080843857
 GameObject:
   m_ObjectHideFlags: 0
@@ -4632,5 +4583,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd8f606b844b4e4eb9b4c6a163988bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1501836598}
+  player: {fileID: 1828428934}
   slot: 1

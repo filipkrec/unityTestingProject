@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Mod_FreezeTime : C_Modifier
 {
-    public void Instantiate(float inDurationModifier)
+    public void Instantiate(float inDuration)
     {
         modifierName = "Time Freeze";
         description = "Time frozen for ";
         icon = null;
-
-        duration = 5.0f * inDurationModifier;
+            
+        duration = inDuration;
         effectiveness = 1.0f;
         target = null;
         timer = gameObject.AddComponent<C_Timer>();

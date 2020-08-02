@@ -7,21 +7,23 @@ public class C_SpellButtons : MonoBehaviour
 {
     public C_FightPlayer player;
     public Button[] spellButtons;
-    public int buttonCount;
 
     C_SpellButtons()
     {
-        spellButtons = new Button[buttonCount];
+        spellButtons = new Button[5];
     }
 
-    void updateButton(int i)
+    public void refreshButton(int i)
     {
-        if(player.spells[i] != null)
+        if (player.spells[i] != null)
         {
             C_Spell spell = player.spells[i];
+            System.Type spellType = spell.GetType();
             spellButtons[i].GetComponent<Image>().sprite = player.spells[i].icon;
-            spellButtons[i].
+            spellButtons[i].onClick.AddListener(spell.Cast);
+            spellButtons[i].gameObject.GetComponentInChildren<Text>().text = player.spells[i].spellName;
+            spellButtons[i].gameObject.SetActive(true);
         }
+        else spellButtons[i].gameObject.SetActive(false);
     }
-
 }

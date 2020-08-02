@@ -10,15 +10,18 @@ public abstract class C_Spell : C_Modifiable
 
     public float cooldown;
     public float effectiveness;
-    public float durationModifier;
+    public float duration;
     public Component target;
 
     public float backupCooldown;
     public float backupEffectiveness;
+    public float backupDuration;
     public virtual void Cast() { }
+    public virtual void Instantiate() { }
     protected override void unmodifyValues()
     {
         cooldown = backupCooldown;
         effectiveness = backupEffectiveness;
+        duration = backupDuration;
     }
 }

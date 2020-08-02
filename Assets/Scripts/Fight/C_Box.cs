@@ -7,6 +7,8 @@ public class C_Box : MonoBehaviour
     public Vector3 originalScale;
     public Vector3 originalPosition;
 
+    public C_Spell spell;
+
     void Start()
     {
         originalPosition = gameObject.transform.position;

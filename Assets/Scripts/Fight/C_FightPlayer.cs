@@ -6,7 +6,6 @@ public class C_FightPlayer : MonoBehaviour
 {
     public int numberOfSlots; 
     public C_Box[] slots;
-    public int numberOfSpells;
     public C_Spell[] spells;
     public int pushForce;
     public int pushDefence;
@@ -22,14 +21,18 @@ public class C_FightPlayer : MonoBehaviour
     {
         numberOfSlots = 5;
         slots = new C_Box[numberOfSlots];
-        numberOfSpells = 1;
-        spells = new C_Spell[numberOfSpells];
+        spells = new C_Spell[numberOfSlots];
+
+        refreshAllButtons();
     }
 
     public C_Box getSlot(int i)
     {
         if (i < numberOfSlots)
+        {
+            removeSpell(i);
             return slots[i];
+        }
         else
             return null;
     }
@@ -37,5 +40,40 @@ public class C_FightPlayer : MonoBehaviour
     public void setSlot(int i, C_Box box)
     {
         slots[i] = box;
+
+        if(box != null)
+        addSpell(i,box.spell);
+        //box.spell
+    }
+
+    private void addSpell(int slot, C_Spell spell)
+    {
+        C_SpellButtons buttons = gameObject.GetComponent<C_SpellButtons>();
+
+        if(buttons != null)
+        {     
+            spells[slot] = spell;
+            buttons.refreshButton(slot);
+        }
+    }
+
+    private void removeSpell(int i)
+    {
+        C_SpellButtons buttons = gameObject.GetComponent<C_SpellButtons>();
+        spells[i] = null;
+
+        if (buttons != null)
+        buttons.refreshButton(i);
+    }
+
+    public void refreshAllButtons()
+    {
+        C_SpellButtons buttons = gameObject.GetComponent<C_SpellButtons>();
+
+        if(buttons != null)
+        for (int i = 0; i < numberOfSlots; ++i)
+        {
+            buttons.refreshButton(i);   
+        }
     }
 }
