@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class C_Timer : MonoBehaviour
+public class C_Timer : C_Modifiable
 {
     public Action toExecute = delegate { };
     private float timeBeforeExecute; //-1 = manual stop
@@ -16,6 +16,13 @@ public class C_Timer : MonoBehaviour
     bool running;
     bool started;
 
+    bool sequenceTimer;
+    int currentSequenceStep;
+    List<KeyValuePair<Action, float>> actionSequence;
+    float currentSequenceTime;
+
+    C_Timer backup;
+
     /// <summary>
     ///  -1 Time before execute = infinity ;
     ///  -1 repeats = infinite
@@ -24,19 +31,6 @@ public class C_Timer : MonoBehaviour
     /// <param name="inTimeBeforeExecute"></param>
     /// <param name="inRepeats"></param>
     /// <param name="inTimeBetweenRepeat"></param>
-    public C_Timer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = 0)
-    {
-        toExecute = inAction;
-        timeBeforeExecute = inTimeBeforeExecute;
-        timeBetweenRepeat = inTimeBetweenRepeat;
-        repeats = inRepeats;
-        currentTimerValue = 0.0f;
-        precision = 6;
-        running = true;
-        executed = false;
-        started = false;
-    }
-
     public void initiateTimer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
     {
         toExecute = inAction;
@@ -49,9 +43,16 @@ public class C_Timer : MonoBehaviour
         running = true;
         executed = false;
         started = false;
+        sequenceTimer = false;
     }
 
-    // Update is called once per frame
+    public void initiateTimer(List<KeyValuePair<Action, float>> inActionSequence)
+    {
+        actionSequence = inActionSequence;
+        sequenceTimer = true;
+        currentSequenceStep = 0;
+    }
+
     void Update()
     {
         if (running)
@@ -63,32 +64,57 @@ public class C_Timer : MonoBehaviour
             }
 
             currentTimerValue += Time.deltaTime;
-            if ((int)timeBeforeExecute != -1)
-            {
-                if ((GetCurrentTime() >= timeBeforeExecute || timeBeforeExecute == 0)
-                    && !executed)
-                {
-                    if (timeBeforeExecute == 0)
-                    {
-                        currentTimerValue = 0.0f;
-                    }
-                    toExecute();
-                    executed = true;
-                }
-                else if (
-                    executed
-                    && (repeats > 0 || repeats == -1)
-                    && (repeatCounter <= repeats || repeats == -1)
-                    && (GetCurrentTime() >= (timeBeforeExecute + (repeatCounter + 1) * timeBetweenRepeat) || timeBetweenRepeat == 0)
-                    )
-                {
-                    repeatCounter++;
-                    toExecute();
-                }
 
-                if (executed && running && repeatCounter == repeats && repeats != -1)
-                    StopTimer();
+            if (sequenceTimer)
+                SequenceTick();
+            else
+                RegularTick();
+        }
+    }
+
+    void RegularTick()
+    {
+        if ((int)timeBeforeExecute != -1)
+        {
+            if ((GetCurrentTime() >= timeBeforeExecute || timeBeforeExecute == 0)
+                && !executed)
+            {
+                if (timeBeforeExecute == 0)
+                {
+                    currentTimerValue = 0.0f;
+                }
+                toExecute();
+                executed = true;
             }
+            else if (
+                executed
+                && (repeats > 0 || repeats == -1)
+                && (repeatCounter <= repeats || repeats == -1)
+                && (GetCurrentTime() >= (timeBeforeExecute + (repeatCounter + 1) * timeBetweenRepeat) || timeBetweenRepeat == 0)
+                )
+            {
+                repeatCounter++;
+                toExecute();
+            }
+
+            if (executed && running && repeatCounter == repeats && repeats != -1)
+                StopTimer();
+        }
+    }
+
+    void SequenceTick()
+    {
+        currentSequenceTime += Time.deltaTime;
+
+        if (actionSequence[currentSequenceStep].Value <= currentSequenceTime)
+        {
+            actionSequence[currentSequenceStep].Key();
+            currentSequenceStep++;
+            if(currentSequenceStep + 1 == actionSequence.Count)
+            {
+                currentSequenceTime = 0f;
+                repeatCounter++;
+            }    
         }
     }
 
@@ -102,7 +128,9 @@ public class C_Timer : MonoBehaviour
     {
         executed = false;
         started = false;
-        currentTimerValue = 0.0f;
+        currentTimerValue = 0f;
+        currentSequenceTime = 0f;
+        currentSequenceStep = 0;
     }
 
     public void Play()
@@ -120,9 +148,23 @@ public class C_Timer : MonoBehaviour
         toExecute();
     }
 
+    public void setPrecision(int inPrecision)
+    {
+        precision = inPrecision;
+    }
+
     public float GetCurrentTime()
     {
         return (float)Math.Round(currentTimerValue,precision);
+    }
+
+    public float GetTimeLeftBeforeExecute()
+    {
+        if (timeBeforeExecute > 0 && timeBeforeExecute > currentTimerValue)
+        {
+            return (float)Math.Round(timeBeforeExecute - currentTimerValue, precision);
+        }
+        else return 0f;
     }
 
     public int GetRepeatCount()
@@ -130,17 +172,4 @@ public class C_Timer : MonoBehaviour
         return repeatCounter;
     }
 
-    public void setPrecision(int inPrecision)
-    {
-        precision = inPrecision;
-    }
-
-    public float GetTimeLeftBeforeExecute()
-    {
-        if (timeBeforeExecute > 0 && timeBeforeExecute > currentTimerValue)
-        {
-            return timeBeforeExecute - currentTimerValue;
-        }
-        else return 0f;
-    }
 }

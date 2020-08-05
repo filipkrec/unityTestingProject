@@ -8,6 +8,8 @@ public class C_Box : MonoBehaviour
     public Vector3 originalPosition;
 
     public C_Spell spell;
+    public int numberOfSockets;
+    //publci C_Essence[] essences;
 
     void Start()
     {

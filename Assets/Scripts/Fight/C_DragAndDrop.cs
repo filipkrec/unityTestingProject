@@ -112,16 +112,16 @@ public class C_DragAndDrop : MonoBehaviour
 
     void RescaleObjectToObjectByHitbox(GameObject originalObject, GameObject fitObject)
     {
-        float hitboxX = fitObject.GetComponent<BoxCollider2D>().size.x;
-        float hitboxY = fitObject.GetComponent<BoxCollider2D>().size.y;
+        float fitX = fitObject.GetComponent<BoxCollider2D>().size.x;
+        float fitY = fitObject.GetComponent<BoxCollider2D>().size.y;
 
-        float sizeY = originalObject.GetComponent<BoxCollider2D>().size.x;
-        float sizeX = originalObject.GetComponent<BoxCollider2D>().size.y;
+        float originalX = originalObject.GetComponent<SpriteRenderer>().size.x;
+        float originalY = originalObject.GetComponent<SpriteRenderer>().size.y;
 
         Vector3 rescale = originalObject.transform.localScale;
 
-        rescale.x = hitboxX * rescale.x / sizeX;
-        rescale.y = hitboxY * rescale.y / sizeY;
+        rescale.x *= fitX / originalX;
+        rescale.y *= fitY / originalY;
 
         originalObject.transform.localScale = rescale;
     }

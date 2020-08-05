@@ -310,6 +310,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalScale: {x: 0, y: 0, z: 0}
   originalPosition: {x: 0, y: 0, z: 0}
+  spell: {fileID: 0}
+  numberOfSockets: 0
 --- !u!1 &65320570
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +554,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalScale: {x: 0, y: 0, z: 0}
   originalPosition: {x: 0, y: 0, z: 0}
+  spell: {fileID: 0}
+  numberOfSockets: 0
 --- !u!1 &463322330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2981,8 +2985,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1258165036}
   - component: {fileID: 1258165035}
-  - component: {fileID: 1258165037}
   - component: {fileID: 1258165038}
+  - component: {fileID: 1258165039}
+  - component: {fileID: 1258165037}
   m_Layer: 0
   m_Name: 1 SLOT
   m_TagString: Gem
@@ -3029,7 +3034,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c66621ab46416774d9c101772690b84b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9c2e95fcea6ad4643b2c5398279a6a7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3049,7 +3054,7 @@ Transform:
   m_GameObject: {fileID: 1258165034}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -11.754139, y: 0.7157324, z: 357.73242}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1216437327}
   m_RootOrder: 0
@@ -3071,14 +3076,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
 --- !u!114 &1258165038
 MonoBehaviour:
@@ -3094,6 +3099,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalScale: {x: 0, y: 0, z: 0}
   originalPosition: {x: 0, y: 0, z: 0}
+  spell: {fileID: 1258165039}
+  numberOfSockets: 0
+--- !u!114 &1258165039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258165034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28b5a301a468ce445aab76e3cb9e27aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellName: Freeze Time
+  description: Time is frozen for0
+  icon: {fileID: 0}
+  cooldown: 15
+  effectiveness: 1
+  manaCost: 0
+  channelDuration: 0
+  numberOfUses: 0
+  passive: 0
+  exclusiveChannel: 0
+  target: {fileID: 0}
 --- !u!1 &1453372880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3449,7 +3479,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -3576,6 +3606,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalScale: {x: 0, y: 0, z: 0}
   originalPosition: {x: 0, y: 0, z: 0}
+  spell: {fileID: 0}
+  numberOfSockets: 0
 --- !u!1 &1828428932
 GameObject:
   m_ObjectHideFlags: 0
@@ -3586,9 +3618,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1828428933}
   - component: {fileID: 1828428936}
-  - component: {fileID: 1828428935}
   - component: {fileID: 1828428934}
   - component: {fileID: 1828428937}
+  - component: {fileID: 1828428938}
+  - component: {fileID: 1828428935}
   m_Layer: 0
   m_Name: FightActors
   m_TagString: FightActors
@@ -3626,13 +3659,8 @@ MonoBehaviour:
   slots: []
   spells: []
   pushForce: 0
+  pushAttack: 0
   pushDefence: 0
-  timeSpeedup: 0
-  timeSlowdown: 0
-  cooldownSpeedup: 0
-  cooldownSlowdown: 0
-  spellEffectivenessUp: 0
-  spellEffectivenessDown: 0
 --- !u!114 &1828428935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3680,6 +3708,18 @@ MonoBehaviour:
   - {fileID: 668673403}
   - {fileID: 1946168606}
   - {fileID: 718685249}
+--- !u!114 &1828428938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828428932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03257a7953a56fb47826dd887608b6ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1890103420
 GameObject:
   m_ObjectHideFlags: 0
@@ -4137,7 +4177,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986869463}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3051, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1501836596}
@@ -4156,7 +4196,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0007626787, y: 0.0048197713}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4167,7 +4207,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1047174, y: 0.09256573}
+  m_Size: {x: 0.10115494, y: 0.089715704}
   m_EdgeRadius: 0
 --- !u!114 &1986869466
 MonoBehaviour:

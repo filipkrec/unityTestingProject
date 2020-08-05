@@ -63,8 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Globals.cs" />
     <Compile Include="Assets\Scripts\Fight\C_Box.cs" />
     <Compile Include="Assets\Scripts\Fight\C_DragAndDrop.cs" />
+    <Compile Include="Assets\Scripts\Fight\C_Enemy.cs" />
     <Compile Include="Assets\Scripts\Fight\C_FightCalculations.cs" />
     <Compile Include="Assets\Scripts\Fight\C_FightEnemy.cs" />
     <Compile Include="Assets\Scripts\Fight\C_FightPlayer.cs" />
@@ -72,8 +74,10 @@
     <Compile Include="Assets\Scripts\Fight\C_Modifiable.cs" />
     <Compile Include="Assets\Scripts\Fight\C_Modifier.cs" />
     <Compile Include="Assets\Scripts\Fight\C_ModifierStorage.cs" />
+    <Compile Include="Assets\Scripts\Fight\C_ShowTooltipText.cs" />
     <Compile Include="Assets\Scripts\Fight\C_Spell.cs" />
     <Compile Include="Assets\Scripts\Fight\C_SpellButtons.cs" />
+    <Compile Include="Assets\Scripts\Fight\Enemies\C_TestEnemy1.cs" />
     <Compile Include="Assets\Scripts\Fight\Modifiers\Mod_FreezeTime.cs" />
     <Compile Include="Assets\Scripts\Fight\Spells\Sp_FreezeTime.cs" />
     <Compile Include="Assets\Scripts\Game\C_BasicMovement.cs" />
