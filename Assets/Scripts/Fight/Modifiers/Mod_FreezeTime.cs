@@ -22,6 +22,9 @@ public class Mod_FreezeTime : C_Modifier
         timer.initiateTimer(RemoveSelf, duration);
         timer.setPrecision(1);
         lastTime = 0.0f;
+
+        operation = modifierOperation.OTHER;
+        type = modifierType.DEBUFF;
     }
 
     public void Update()

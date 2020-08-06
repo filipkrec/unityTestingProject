@@ -10,12 +10,18 @@ public class C_FightCalculations : C_Modifiable
     public float rate;
     public float rateModifier;
 
-    private float backupRateModifier = 1.0f;
-
     public float currentClash;
 
     C_Timer fightTimer;
+    public float sliderValue;
     public Slider slider;
+
+    public int[] testArray = { -1, 1, 2, 3, 3, 2, 6, 5, -3, 2, 8, -9, 15, -3 };
+    public List<int> testSort = new List<int>();
+    
+    
+         
+    C_FightCalculationBackup backup;
 
     private void Start()
     {
@@ -30,11 +36,24 @@ public class C_FightCalculations : C_Modifiable
 
         player = GetComponent<C_FightPlayer>();
         enemy = GetComponent<C_FightEnemy>();
+
+        for (int i = 0; i < testArray.Length; ++i)
+        {
+            testSort.Add(testArray[i]);
+        }
+
+        testSort.Sort((int1, int2) => int1 < int2 ? -1 : 1);
+        string testString = "";
+        for (int i = 0;i < testSort.Count; ++i)
+            testString += testSort[i].ToString() + ",";
+
+        Debug.Log(testString);
     }
 
     private void Update()
     {
-        slider.value += rate;
+        sliderValue += rate;
+        slider.value = sliderValue;
     }
 
     private void calculateClash()
@@ -46,6 +65,24 @@ public class C_FightCalculations : C_Modifiable
 
     protected override void unmodifyValues()
     {
-        rateModifier = backupRateModifier;
+        if(backup.RateModifierModified)
+        rateModifier = backup.RateModifier;
+
+        backup.Reset();
+    }
+}
+
+class C_FightCalculationBackup
+{
+    private bool rateModifierModified = false;
+    private float rateModifier;
+
+    public bool RateModifierModified { get => rateModifierModified; }
+    public float RateModifier { get => rateModifier; set { rateModifier = value; rateModifierModified = true; } }
+
+
+    public void Reset()
+    {
+        rateModifierModified = false;
     }
 }

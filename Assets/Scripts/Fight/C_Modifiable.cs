@@ -5,11 +5,14 @@ using UnityEngine;
 public class C_Modifiable : MonoBehaviour
 {
     private List<C_Modifier> modifiers = new List<C_Modifier>();
+    private int currentOrdinal = 0;
 
     public void addModifier(C_Modifier modifier)
     {
-        modifier.Modify();
         modifiers.Add(modifier);
+        modifier.ordinal = currentOrdinal;
+        currentOrdinal++;
+        unmodifyValues();
     }
 
     public void removeModifier(C_Modifier modifier)
@@ -20,6 +23,7 @@ public class C_Modifiable : MonoBehaviour
     }
     private void modifyValues()
     {
+        modifiers.Sort((mod1, mod2) => mod1.sortMod(mod2) ? -1 : 1);
         foreach (C_Modifier modifier in modifiers)
             modifier.Modify();
     }
@@ -29,3 +33,4 @@ public class C_Modifiable : MonoBehaviour
         
     }
 }
+

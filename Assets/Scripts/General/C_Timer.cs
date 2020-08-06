@@ -21,7 +21,7 @@ public class C_Timer : C_Modifiable
     List<KeyValuePair<Action, float>> actionSequence;
     float currentSequenceTime;
 
-    C_Timer backup;
+    C_TimerBackup backup;
 
     /// <summary>
     ///  -1 Time before execute = infinity ;
@@ -172,4 +172,69 @@ public class C_Timer : C_Modifiable
         return repeatCounter;
     }
 
+}
+
+
+class C_TimerBackup
+{
+    private bool toExecuteModified = false;
+    private Action toExecute;
+
+    private bool timeBeforeExecuteModified = false;
+    private float timeBeforeExecute; //-1 = manual stop
+
+    private bool timeBetweenRepeatModified = false;
+    private float timeBetweenRepeat;
+
+    private bool executedModified = false;
+    private bool executed;
+
+    private bool repeatsModified = false;
+    private int repeats; // -1 = inf
+
+    private bool repeatCounterModified = false;
+    private int repeatCounter;
+
+    private bool currentTimerValueModified = false;
+    private float currentTimerValue;
+
+    private bool precisionModified = false;
+    private int precision;
+
+    private bool runningModified = false;
+    bool running;
+
+    private bool startedModified = false;
+    bool started;
+
+    bool actionSequenceModified = false;
+    List<KeyValuePair<Action, float>> actionSequence;
+
+    bool currentSequenceTimeModified = false;
+    float currentSequenceTime;
+
+    public bool ToExecuteModified { get => toExecuteModified;}
+    public Action ToExecute { get => toExecute; set { toExecute = value; toExecuteModified = true; } }
+    public bool TimeBeforeExecuteModified { get => timeBeforeExecuteModified;}
+    public float TimeBeforeExecute { get => timeBeforeExecute; set { timeBeforeExecute = value; timeBeforeExecuteModified = true; } }
+    public bool TimeBetweenRepeatModified { get => timeBetweenRepeatModified;}
+    public float TimeBetweenRepeat { get => timeBetweenRepeat; set { timeBetweenRepeat = value; timeBetweenRepeatModified = true; } }
+    public bool ExecutedModified { get => executedModified;}
+    public bool Executed { get => executed; set { executed = value; executedModified = true; } }
+    public bool RepeatsModified { get => repeatsModified;}
+    public int Repeats { get => repeats; set { repeats = value; repeatsModified = true; } }
+    public bool RepeatCounterModified { get => repeatCounterModified;}
+    public int RepeatCounter { get => repeatCounter; set { repeatCounter = value; repeatCounterModified = true; } }
+    public bool CurrentTimerValueModified { get => currentTimerValueModified;}
+    public float CurrentTimerValue { get => currentTimerValue; set { currentTimerValue = value; currentTimerValueModified = true; } }
+    public bool PrecisionModified { get => precisionModified;}
+    public int Precision { get => precision; set { precision = value; precisionModified = true; } }
+    public bool RunningModified { get => runningModified;}
+    public bool Running { get => running; set { running = value; runningModified = true; } }
+    public bool StartedModified { get => startedModified;}
+    public bool Started { get => started; set { started = value; startedModified = true; } }
+    public bool ActionSequenceModified { get => actionSequenceModified; }
+    public List<KeyValuePair<Action, float>> ActionSequence { get => actionSequence; set { actionSequence = value; actionSequenceModified = true; } }
+    public bool CurrentSequenceTimeModified { get => currentSequenceTimeModified; }
+    public float CurrentSequenceTime { get => currentSequenceTime; set { currentSequenceTime = value; currentSequenceTimeModified = true; } }
 }
