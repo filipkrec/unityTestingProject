@@ -4,22 +4,48 @@ using UnityEngine;
 
 public class C_FightEnemy : MonoBehaviour
 {
-    private static C_Enemy enemy;
-    public C_Enemy Enemy { get { return enemy; } }
+    protected List<KeyValuePair<C_Spell, float>> spellSequence;
+    C_Timer timer;
 
-    public static void setEnemy(C_Enemy inEnemy)
-    {
-        enemy = inEnemy;
-    }
+    public int pushForce;
+    public int pushAttack;
+    public int pushDefence;
+    List<C_Modifier> spellModifiers;
 
-    private void Start()
-    {
-        C_Enemy enemyComponent = gameObject.AddComponent<C_Enemy>();
-        enemyComponent.pushForce = 5;
-        enemy = enemyComponent;
-    }
+    C_FightEnemyBackup backup;
+
+    /*
+    
+    SEQ 1 -> svakih 5 sec x 
+             svakih 12 sec y
+             svakih 31 sec z
+
+    SEQ 2 -> 15s 
+             5s -> x
+             10 s -> y
+             15 s -> z
+             repeat
+     */
 }
 
+public class C_FightEnemyBackup
+{
+    bool pushForceModified = false;
+    int pushForce;
+
+    bool pushAttackModified = false;
+    int pushAttack;
+
+    bool pushDefenceModified = false;
+    int pushDefence;
+
+    public bool PushForceModified { get => pushForceModified; }
+    public int PushForce { get => pushForce; set { pushForce = value; pushForceModified = true; } }
+    public bool PushAttackModified { get => pushAttackModified; }
+    public int PushAttack { get => pushAttack; set { pushAttack = value; pushAttackModified = true; } }
+    public bool PushDefenceModified { get => pushDefenceModified; }
+    public int PushDefence { get => pushDefence; set { pushDefence = value; pushDefenceModified = true; } }
+}
 
 
 /*  ENEMY 1

@@ -19,7 +19,7 @@ public abstract class C_Spell : C_Modifiable
 
     public Component target;
 
-    C_SpellBackup backup;
+    protected C_SpellBackup backup;
 
     public virtual void Cast() { }
     public virtual void Instantiate() { }
@@ -35,8 +35,8 @@ public abstract class C_Spell : C_Modifiable
             cooldown = backup.Cooldown;
         if (backup.EffectivenessModified)
             effectiveness = backup.Effectiveness;
-        if (backup.DurationModified)
-            //duration = backup.Duration;
+        if (backup.ChannelDurationModified)
+            channelDuration = backup.ChannelDuration;
         if (backup.TargetModified)
             target = backup.Target;
     }
@@ -54,8 +54,8 @@ public class C_SpellBackup
     private float cooldown;
     bool effectivenessModified = false;
     private float effectiveness;
-    bool durationModified = false;
-    private float duration;
+    bool channelDurationModified = false;
+    private float channelDuration;
     bool targetModified = false;
     private Component target;
 
@@ -64,7 +64,7 @@ public class C_SpellBackup
     public Sprite Icon { get => icon; set { icon = value; iconModified = true; } }
     public float Cooldown { get => cooldown; set { cooldown = value; cooldownModified = true; } }
     public float Effectiveness { get => effectiveness; set { effectiveness = value; effectivenessModified = true; } }
-    public float Duration { get => duration; set { duration = value; durationModified = true; } }
+    public float ChannelDuration { get => channelDuration; set { channelDuration = value; channelDurationModified = true; } }
     public Component Target { get => target; set { target = value; targetModified = true; } }
 
     public bool SpellNameModified { get => spellNameModified; }
@@ -72,6 +72,6 @@ public class C_SpellBackup
     public bool IconModified { get => iconModified; }
     public bool CooldownModified { get => cooldownModified; }
     public bool EffectivenessModified { get => effectivenessModified; }
-    public bool DurationModified { get => durationModified; }
+    public bool ChannelDurationModified { get => channelDurationModified; }
     public bool TargetModified { get => targetModified; }
 }

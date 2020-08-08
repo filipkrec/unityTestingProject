@@ -11,7 +11,7 @@ public abstract class C_Modifier : MonoBehaviour
     public string description;
     public Sprite icon;
 
-    bool showTooltip;
+    protected bool showTooltip;
 
     public float duration; //-1 inf
     public float effectiveness;
@@ -23,16 +23,28 @@ public abstract class C_Modifier : MonoBehaviour
     public int ordinal;
 
 
+    protected TextMeshProUGUI descriptionText;
+    protected float lastDescriptionUpdateTime;
+
     protected GameObject modifierIcon;
     public C_Timer timer;
 
+    public void Update()
+    {
+        if (descriptionText != null && timer.GetCurrentTime() - lastDescriptionUpdateTime > 1f/60)
+        {
+            descriptionText.text = GetDescription();
+            lastDescriptionUpdateTime = timer.GetCurrentTime();
+        }
+    }
+
     public virtual void Modify() 
     {
-        if (showTooltip)
+        if (showTooltip && modifierIcon == null)
         {
             GameObject prefab = (GameObject)Resources.Load("ModifierIcon", typeof(GameObject));
             if (prefab != null)
-                modifierIcon = Instantiate(prefab, Globals.canvas.transform);
+                modifierIcon = Instantiate(prefab, Globals.GetCanvas().transform);
 
             if (modifierIcon != null)
             {
@@ -94,6 +106,23 @@ public abstract class C_Modifier : MonoBehaviour
         }
 
                 return this.ordinal > other.ordinal;
+    }
+
+    public bool ShowsTooltip()
+    {
+        return showTooltip;
+    }
+
+    public void repositionTooltipIcon(Vector2 newPosition)
+    {
+        if (modifierIcon != null)
+            modifierIcon.transform.localPosition = newPosition;
+    }
+
+    public void moveTooltipIcon(Vector2 moveFor)
+    {
+        if (modifierIcon != null)
+            modifierIcon.transform.localPosition += new Vector3(moveFor.x,moveFor.y);
     }
 }
 

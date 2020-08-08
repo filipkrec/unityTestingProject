@@ -6,7 +6,6 @@ public class C_FightPlayer : C_Modifiable
 {
     public int numberOfSlots; 
     public C_Box[] slots;
-    public C_Spell[] spells;
 
     public int pushForce;
     public int pushAttack;
@@ -32,11 +31,8 @@ public class C_FightPlayer : C_Modifiable
     // Start is called before the first frame update
     void Start()
     {
-        numberOfSlots = 5;
-        pushForce = 4;
+        backup = new C_FightPlayerBackup();
         slots = new C_Box[numberOfSlots];
-        spells = new C_Spell[numberOfSlots];
-
         refreshAllButtons();
     }
 
@@ -44,7 +40,6 @@ public class C_FightPlayer : C_Modifiable
     {
         if (i < numberOfSlots)
         {
-            removeSpell(i);
             return slots[i];
         }
         else
@@ -54,39 +49,14 @@ public class C_FightPlayer : C_Modifiable
     public void setSlot(int i, C_Box box)
     {
         slots[i] = box;
-
-        if(box != null)
-        addSpell(i,box.spell);
-    }
-
-    private void addSpell(int slot, C_Spell spell)
-    {
-        C_SpellButtons buttons = gameObject.GetComponent<C_SpellButtons>();
-
-        if(buttons != null)
-        {     
-            spells[slot] = spell;
-            buttons.refreshButton(slot);
-        }
-    }
-
-    private void removeSpell(int i)
-    {
-        C_SpellButtons buttons = gameObject.GetComponent<C_SpellButtons>();
-        spells[i] = null;
-
-        if (buttons != null)
-        buttons.refreshButton(i);
+        Globals.GetButtons().refreshButton(i);
     }
 
     public void refreshAllButtons()
     {
-        C_SpellButtons buttons = gameObject.GetComponent<C_SpellButtons>();
-
-        if(buttons != null)
-        for (int i = 0; i < numberOfSlots; ++i)
+        for (int i = 0; i < Globals.GetButtons().spellButtons.Length; ++i)
         {
-            buttons.refreshButton(i);   
+            Globals.GetButtons().refreshButton(i);   
         }
     }
 

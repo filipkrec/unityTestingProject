@@ -15,6 +15,8 @@ public class C_Box : MonoBehaviour
     {
         originalPosition = gameObject.transform.position;
         originalScale = gameObject.transform.localScale;
+        if(spell != null)
+            spell.Instantiate();
     }
 
     // Update is called once per frame

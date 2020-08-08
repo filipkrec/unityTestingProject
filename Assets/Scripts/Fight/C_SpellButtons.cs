@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class C_SpellButtons : MonoBehaviour
 {
-    public C_FightPlayer player;
     public Button[] spellButtons;
 
     C_SpellButtons()
@@ -15,13 +14,13 @@ public class C_SpellButtons : MonoBehaviour
 
     public void refreshButton(int i)
     {
-        if (player.spells[i] != null)
+        if (Globals.GetPlayer().slots[i] != null)
         {
-            C_Spell spell = player.spells[i];
+            C_Spell spell = Globals.GetPlayer().slots[i].spell;
             System.Type spellType = spell.GetType();
-            spellButtons[i].GetComponent<Image>().sprite = player.spells[i].icon;
+            spellButtons[i].GetComponent<Image>().sprite = spell.icon;
             spellButtons[i].onClick.AddListener(spell.Cast);
-            spellButtons[i].gameObject.GetComponentInChildren<Text>().text = player.spells[i].spellName;
+            spellButtons[i].gameObject.GetComponentInChildren<Text>().text = spell.spellName;
             spellButtons[i].gameObject.SetActive(true);
         }
         else spellButtons[i].gameObject.SetActive(false);

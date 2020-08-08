@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Mod_FreezeTime : C_Modifier
 {
-    private TextMeshProUGUI descriptionText;
-    float lastTime;
 
     public void Instantiate(float inDuration)
     {
@@ -17,29 +15,23 @@ public class Mod_FreezeTime : C_Modifier
             
         duration = inDuration;
         effectiveness = 1.0f;
-        target = null;
+        target = Globals.GetClash();
         timer = gameObject.AddComponent<C_Timer>();
         timer.initiateTimer(RemoveSelf, duration);
         timer.setPrecision(1);
-        lastTime = 0.0f;
+        lastDescriptionUpdateTime = 0.0f;
+
+        showTooltip = true;
 
         operation = modifierOperation.OTHER;
         type = modifierType.DEBUFF;
-    }
-
-    public void Update()
-    {
-        if(descriptionText != null && timer.GetCurrentTime() - lastTime > 0.1f)
-        {
-            descriptionText.text = GetDescription();
-            lastTime = timer.GetCurrentTime();
-        }
     }
 
     public override void Modify()
     {
         base.Modify();
 
+        if(modifierIcon != null)
         foreach (Transform child in modifierIcon.GetComponentsInChildren<Transform>(true))
         {
             TextMeshProUGUI txt = child.GetComponentInChildren<TextMeshProUGUI>();
@@ -48,11 +40,9 @@ public class Mod_FreezeTime : C_Modifier
                 descriptionText = txt;
         }
 
-        if (target is C_FightCalculations)
-        {
-            C_FightCalculations thisTarget = (C_FightCalculations)target;
-            thisTarget.rateModifier = 0.0f;
-        }
+        C_Clash thisTarget = (C_Clash)target;
+        thisTarget.backup.RateModifier = thisTarget.rateModifier;
+        thisTarget.rateModifier = 0.0f;
     }
 
     public override string GetDescription()

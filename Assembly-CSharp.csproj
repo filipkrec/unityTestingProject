@@ -63,11 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Globals.cs" />
     <Compile Include="Assets\Scripts\Fight\C_Box.cs" />
+    <Compile Include="Assets\Scripts\Fight\C_Clash.cs" />
     <Compile Include="Assets\Scripts\Fight\C_DragAndDrop.cs" />
     <Compile Include="Assets\Scripts\Fight\C_Enemy.cs" />
-    <Compile Include="Assets\Scripts\Fight\C_FightCalculations.cs" />
     <Compile Include="Assets\Scripts\Fight\C_FightEnemy.cs" />
     <Compile Include="Assets\Scripts\Fight\C_FightPlayer.cs" />
     <Compile Include="Assets\Scripts\Fight\C_FillSlot.cs" />
@@ -95,6 +94,7 @@
     <Compile Include="Assets\Scripts\General\SaveData.cs" />
     <Compile Include="Assets\Scripts\General\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\General\SwapScene.cs" />
+    <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\MainMenu\C_MainMenu.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
