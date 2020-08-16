@@ -30,8 +30,7 @@ public class C_BasicMovement : MonoBehaviour
         {
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
         }
-        timer = gameObject.AddComponent<C_Timer>();
-        timer.initiateTimer(Test,2.0f,3,2.0f);
+        timer = new C_Timer(Test, 2.0f, 3, 2.0f);
         timer.setPrecision(2);
     }
 

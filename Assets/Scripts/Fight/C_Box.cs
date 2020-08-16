@@ -9,14 +9,19 @@ public class C_Box : MonoBehaviour
 
     public C_Spell spell;
     public int numberOfSockets;
-    //publci C_Essence[] essences;
+    public List<C_Essence> essences = new List<C_Essence>();
 
     void Start()
     {
         originalPosition = gameObject.transform.position;
         originalScale = gameObject.transform.localScale;
-        if(spell != null)
-            spell.Instantiate();
+        if (spell != null)
+        {
+            foreach (C_Essence essence in essences)
+            {
+                essence.modify(spell);
+            }
+        }
     }
 
     // Update is called once per frame

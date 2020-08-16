@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_Modifiable
+public class C_ModifiableMono : MonoBehaviour
 {
     private List<C_Modifier> modifiers = new List<C_Modifier>();
     private int currentOrdinal = 0;
@@ -45,19 +45,17 @@ public class C_Modifiable
             }
         }
 
-        foreach(C_Modifier modifier in modifiers)
+        foreach (C_Modifier modifier in modifiers)
         {
             if (modifier.ShowsTooltip())
             {
                 //recenter tooltips
-                modifier.moveTooltipIcon(- nextTooltipPositionDifference / 2 * currentTooltipCount);
+                modifier.moveTooltipIcon(-nextTooltipPositionDifference / 2 * currentTooltipCount);
             }
         }
     }
 
     public virtual void unmodifyValues()
     {
-        
     }
 }
-

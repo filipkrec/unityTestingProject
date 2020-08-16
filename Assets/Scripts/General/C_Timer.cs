@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class C_Timer : C_Modifiable
+public class C_Timer : C_Modifiable, IModifiable
 {
     public Action toExecute = delegate { };
     private float timeBeforeExecute; //-1 = manual stop
@@ -15,6 +15,7 @@ public class C_Timer : C_Modifiable
     private int precision;
     bool running;
     bool started;
+    public bool delete = false;
 
     bool sequenceTimer;
     int currentSequenceStep;
@@ -22,6 +23,8 @@ public class C_Timer : C_Modifiable
     float currentSequenceTime;
 
     C_TimerBackup backup;
+
+    public C_Timer() { }
 
     /// <summary>
     ///  -1 Time before execute = infinity ;
@@ -31,7 +34,7 @@ public class C_Timer : C_Modifiable
     /// <param name="inTimeBeforeExecute"></param>
     /// <param name="inRepeats"></param>
     /// <param name="inTimeBetweenRepeat"></param>
-    public void initiateTimer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
+    public C_Timer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
     {
         toExecute = inAction;
         timeBeforeExecute = inTimeBeforeExecute;
@@ -44,16 +47,43 @@ public class C_Timer : C_Modifiable
         executed = false;
         started = false;
         sequenceTimer = false;
+        delete = false;
+
+        if (Globals.GetTimers() != null)
+            Globals.GetTimers().AddTimer(this);
     }
 
-    public void initiateTimer(List<KeyValuePair<Action, float>> inActionSequence)
+    public void Instantiate(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
+    {
+        toExecute = inAction;
+        timeBeforeExecute = inTimeBeforeExecute;
+        timeBetweenRepeat = inTimeBetweenRepeat;
+        repeats = inRepeats;
+        currentTimerValue = 0.0f;
+        repeatCounter = 0;
+        precision = 6;
+        running = true;
+        executed = false;
+        started = false;
+        sequenceTimer = false;
+        delete = false;
+
+        if (Globals.GetTimers() != null)
+            Globals.GetTimers().AddTimer(this);
+    }
+
+    public C_Timer(List<KeyValuePair<Action, float>> inActionSequence)
     {
         actionSequence = inActionSequence;
         sequenceTimer = true;
         currentSequenceStep = 0;
+        delete = false;
+
+        if (Globals.GetTimers() != null)
+            Globals.GetTimers().AddTimer(this);
     }
 
-    void Update()
+    public void Update(float deltaTime)
     {
         if (running)
         {
@@ -63,10 +93,10 @@ public class C_Timer : C_Modifiable
                 repeatCounter = 0;
             }
 
-            currentTimerValue += Time.deltaTime;
+            currentTimerValue +=deltaTime;
 
             if (sequenceTimer)
-                SequenceTick();
+                SequenceTick(deltaTime);
             else
                 RegularTick();
         }
@@ -83,8 +113,8 @@ public class C_Timer : C_Modifiable
                 {
                     currentTimerValue = 0.0f;
                 }
-                toExecute();
                 executed = true;
+                toExecute();
             }
             else if (
                 executed
@@ -102,9 +132,9 @@ public class C_Timer : C_Modifiable
         }
     }
 
-    void SequenceTick()
+    void SequenceTick(float deltaTime)
     {
-        currentSequenceTime += Time.deltaTime;
+        currentSequenceTime += deltaTime;
 
         if (actionSequence[currentSequenceStep].Value <= currentSequenceTime)
         {
@@ -170,6 +200,11 @@ public class C_Timer : C_Modifiable
     public int GetRepeatCount()
     {
         return repeatCounter;
+    }
+
+    public bool IsRunning()
+    {
+        return running;
     }
 
 }

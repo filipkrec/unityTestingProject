@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_FightEnemy : MonoBehaviour
+public class C_FightEnemy : C_Modifiable
 {
     protected List<KeyValuePair<C_Spell, float>> spellSequence;
     C_Timer timer;
 
-    public int pushForce;
+    public int pushForce = 5;
     public int pushAttack;
     public int pushDefence;
     List<C_Modifier> spellModifiers;
 
     C_FightEnemyBackup backup;
+
+    public void Start()
+    {
+        tooltipStartingPosition = new Vector2(200f, 0f);
+        nextTooltipPositionDifference = new Vector2(0f, 20f);
+    }
 
     /*
     

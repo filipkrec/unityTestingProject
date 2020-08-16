@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_FightPlayer : C_Modifiable
+public class C_FightPlayer : C_Modifiable, IModifiable
 {
-    public int numberOfSlots; 
+    public int numberOfSlots = 5; 
     public C_Box[] slots;
 
-    public int pushForce;
+    public int manaMax = 100;
+    public int mana = 100;
+    public int pushForce = 4;
     public int pushAttack;
     public int pushDefence;
     List<C_Modifier> spellModifiers;
 
-    C_FightPlayerBackup backup;
+    public C_FightPlayerBackup backup;
 
     /*
      PRVO ZBRAJANJE => ODUZIMANJE => MNOZENJE => DJELJENJE
@@ -29,10 +31,14 @@ public class C_FightPlayer : C_Modifiable
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
+        tooltipStartingPosition = new Vector2(-200f, 0f);
+        nextTooltipPositionDifference = new Vector2(0f, 20f);
+
         backup = new C_FightPlayerBackup();
         slots = new C_Box[numberOfSlots];
+        mana = manaMax;
         refreshAllButtons();
     }
 
@@ -60,7 +66,7 @@ public class C_FightPlayer : C_Modifiable
         }
     }
 
-    protected override void unmodifyValues()
+    public override void unmodifyValues()
     {
         if (backup.NumberOfSlotsModified)
             numberOfSlots = backup.NumberOfSlots;
@@ -70,6 +76,8 @@ public class C_FightPlayer : C_Modifiable
             pushAttack = backup.PushAttack;
         if (backup.PushDefenceModified)
             pushDefence = backup.PushDefence;
+        if (backup.ManaMaxModified)
+            manaMax = backup.ManaMax;
 
         backup.Reset();
     }
@@ -89,15 +97,21 @@ public class C_FightPlayerBackup
     bool pushDefenceModified = false;
     int pushDefence;
 
+    bool manaMaxModified = false;
+    int manaMax;
+
     public bool NumberOfSlotsModified { get => numberOfSlotsModified; }
-    public int NumberOfSlots { get => numberOfSlots; set { numberOfSlots = value; numberOfSlotsModified = true; } }
+    public int NumberOfSlots { get => numberOfSlots; set { if (!numberOfSlotsModified) numberOfSlots = value; numberOfSlotsModified = true; } }
     public bool PushForceModified { get => pushForceModified; }
-    public int PushForce { get => pushForce; set { pushForce = value; pushForceModified = true; } }
+    public int PushForce { get => pushForce; set { if (!pushForceModified) pushForce = value; pushForceModified = true; } }
     public bool PushAttackModified { get => pushAttackModified; }
-    public int PushAttack { get => pushAttack; set { pushAttack = value; pushAttackModified = true; } }
+    public int PushAttack { get => pushAttack; set { if (!pushAttackModified) pushAttack = value; pushAttackModified = true; } }
     public bool PushDefenceModified { get => pushDefenceModified; }
-    public int PushDefence { get => pushDefence; set { pushDefence = value; pushDefenceModified = true; } }
-    
+    public int PushDefence { get => pushDefence; set { if (!pushDefenceModified) pushDefence = value; pushDefenceModified = true; } }
+    public bool ManaMaxModified { get => manaMaxModified; }
+    public int ManaMax { get => manaMax; set { if (!manaMaxModified) manaMax = value; manaMaxModified = true; } }
+
+
     public void Reset()
     {
          numberOfSlotsModified = false;

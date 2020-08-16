@@ -89,7 +89,6 @@ public class C_DragAndDrop : MonoBehaviour
 
                         if (swappedBox != null)
                         {
-                            Debug.Log("1");
                             swappedBox.ResetScale();
                             swappedBox.ResetPosition();
                         }

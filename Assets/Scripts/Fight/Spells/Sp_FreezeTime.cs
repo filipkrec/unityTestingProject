@@ -5,27 +5,13 @@ using UnityEngine;
 
 public class Sp_FreezeTime : C_Spell
 {
-    public Sp_FreezeTime()
+    public Sp_FreezeTime() : base()
     {
         spellName = "Freeze Time";
-        description = "Time is frozen for"; // + (duration).ToString(); TODO
+        description = "Time is frozen for 5s"; 
         icon = null;
 
-        cooldown = 15.0f;
-        effectiveness = 1.0f;
-        channelDuration = 0.0f;
-        target = Globals.GetClash();
-
-        backup = new C_SpellBackup();
-        
-    }
-
-    public override void Instantiate()
-    {
-        spellName = "Freeze Time";
-        description = "Time is frozen for"; // duration.ToString(); TODO
-        icon = null;
-
+        manaCost = 5.0f;
         cooldown = 15.0f;
         effectiveness = 1.0f;
         target = Globals.GetClash();
@@ -33,12 +19,15 @@ public class Sp_FreezeTime : C_Spell
 
     public override void Cast()
     {
-        if(target is C_Clash)
+        if (canUse())
         {
-            C_Clash thisTarget = (C_Clash) target;
+            useResources();
 
-            Mod_FreezeTime mod = thisTarget.gameObject.AddComponent<Mod_FreezeTime>();
-            mod.Instantiate(5.0f);
+            Debug.Assert(target is C_Clash);
+
+            C_Clash thisTarget = (C_Clash)target;
+
+            Mod_FreezeTime mod = new Mod_FreezeTime(5.0f);
 
             thisTarget.addModifier(mod);
         }

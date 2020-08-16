@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
-public abstract class C_Modifier : MonoBehaviour
+public abstract class C_Modifier
 {
     public string modifierName;
     public string description;
@@ -17,7 +17,7 @@ public abstract class C_Modifier : MonoBehaviour
     public float effectiveness;
     public int stacks;
 
-    protected Component target;
+    protected IModifiable target;
     public modifierOperation operation;
     public modifierType type;
     public int ordinal;
@@ -28,6 +28,7 @@ public abstract class C_Modifier : MonoBehaviour
 
     protected GameObject modifierIcon;
     public C_Timer timer;
+    public C_Timer iconTimer;
 
     public void Update()
     {
@@ -44,7 +45,7 @@ public abstract class C_Modifier : MonoBehaviour
         {
             GameObject prefab = (GameObject)Resources.Load("ModifierIcon", typeof(GameObject));
             if (prefab != null)
-                modifierIcon = Instantiate(prefab, Globals.GetCanvas().transform);
+                modifierIcon = MonoBehaviour.Instantiate(prefab, Globals.GetCanvas().transform);
 
             if (modifierIcon != null)
             {
@@ -61,23 +62,21 @@ public abstract class C_Modifier : MonoBehaviour
                             txt.SetText(GetDescription());
                 }
             }
+
+            iconTimer = new C_Timer(Update, 0f, -1);
         }
     }
 
     protected void RemoveSelf() 
-    { 
-        if(target is C_Modifiable)
-        {
-            C_Modifiable currTarget = (C_Modifiable)target;
-            currTarget.removeModifier(this);
-        }
+    {
+        iconTimer.delete = true;
+        target.removeModifier(this);
 
         if (modifierIcon != null)
-            Destroy(modifierIcon);
-
+            MonoBehaviour.Destroy(modifierIcon);
     }
 
-    public void SetTarget(Component inTarget)
+    public void SetTarget(IModifiable inTarget)
     {
         target = inTarget;
     }
@@ -138,3 +137,28 @@ public enum modifierOperation
     MULTIPLICATION,
     OTHER
 }
+
+/*
+ * MOD CONSTRUCTOR EXAMPLE 
+        Mod_Modifier(...)
+{
+        modifierName = "Name";
+        description = "Desc";
+        icon = Icon;
+
+        duration = inDuration;
+        effectiveness = inEffectiveness;
+        target = Globals.GetPlayer();
+
+        timer = new C_Timer();
+        timer.Instantiate(delegate { RemoveSelf(); timer.deleteTimer(); }, duration);
+
+        timer.setPrecision(1);
+        lastDescriptionUpdateTime = 0.0f;
+
+        showTooltip = true;
+
+        operation = modifierOperation.ADDITION;
+        type = modifierType.DEBUFF;
+}
+ */
