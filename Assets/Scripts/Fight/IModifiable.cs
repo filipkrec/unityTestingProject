@@ -8,4 +8,6 @@ public interface IModifiable
     void removeModifier(C_Modifier modifier);
     void modifyValues();
     void unmodifyValues();
+
+    C_Modifier getModifier<T>();
 }

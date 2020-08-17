@@ -22,8 +22,6 @@ public abstract class C_Spell : C_Modifiable, IModifiable
     public bool passive;
     public bool exclusiveChannel;
 
-    public IModifiable target;
-
     protected C_SpellBackup backup;
     protected bool castInterupted;
 
@@ -117,8 +115,6 @@ public abstract class C_Spell : C_Modifiable, IModifiable
             effectiveness = backup.Effectiveness;
         if (backup.ChannelDurationModified)
             channelDuration = backup.ChannelDuration;
-        if (backup.TargetModified)
-            target = backup.Target;
     }
 }
 
@@ -136,8 +132,6 @@ public class C_SpellBackup
     private float effectiveness;
     bool channelDurationModified = false;
     private float channelDuration;
-    bool targetModified = false;
-    private IModifiable target;
 
     public string SpellName { get => spellName; set { spellName = value; spellNameModified = true; } }
     public string Description { get => description; set { description = value; descriptionModified = true; } }
@@ -145,7 +139,6 @@ public class C_SpellBackup
     public float Cooldown { get => cooldown; set { cooldown = value; cooldownModified = true; } }
     public float Effectiveness { get => effectiveness; set { effectiveness = value; effectivenessModified = true; } }
     public float ChannelDuration { get => channelDuration; set { channelDuration = value; channelDurationModified = true; } }
-    public IModifiable Target { get => target; set { target = value; targetModified = true; } }
 
     public bool SpellNameModified { get => spellNameModified; }
     public bool DescriptionModified { get => descriptionModified;}
@@ -153,5 +146,4 @@ public class C_SpellBackup
     public bool CooldownModified { get => cooldownModified; }
     public bool EffectivenessModified { get => effectivenessModified; }
     public bool ChannelDurationModified { get => channelDurationModified; }
-    public bool TargetModified { get => targetModified; }
 }

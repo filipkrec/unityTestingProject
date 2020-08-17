@@ -58,4 +58,9 @@ public class C_ModifiableMono : MonoBehaviour
     public virtual void unmodifyValues()
     {
     }
+
+    public C_Modifier getModifier<T>()
+    {
+        return modifiers.Find(x => x is T);
+    }
 }

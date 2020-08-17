@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class C_Enemy : C_Modifiable
+public class C_Enemy : C_Modifiable, IModifiable
 {
 
     protected List<KeyValuePair<C_Spell, float>> spellSequence;
@@ -12,9 +12,12 @@ public class C_Enemy : C_Modifiable
     public int pushForce;
     public int pushAttack;
     public int pushDefence;
-    List<C_Modifier> spellModifiers;
 
     C_EnemyBackup backup;
+    public virtual void unmodifyValues()
+    {
+
+    }
 
     /*
     

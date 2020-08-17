@@ -16,7 +16,7 @@ public class Mod_DivineForce : C_Modifier
         target = Globals.GetPlayer();
 
         timer = new C_Timer();
-        timer.Instantiate(delegate { RemoveSelf(); timer.delete = true; }, duration);
+        timer.Instantiate(delegate { Remove(); timer.delete = true; }, duration);
 
         timer.setPrecision(1);
         lastDescriptionUpdateTime = 0.0f;
@@ -30,15 +30,6 @@ public class Mod_DivineForce : C_Modifier
     public override void Modify()
     {
         base.Modify();
-
-        if (modifierIcon != null)
-            foreach (Transform child in modifierIcon.GetComponentsInChildren<Transform>(true))
-            {
-                TextMeshProUGUI txt = child.GetComponentInChildren<TextMeshProUGUI>();
-
-                if (txt != null && txt.name == "Description")
-                    descriptionText = txt;
-            }
 
         Debug.Assert(target is C_FightPlayer);
 

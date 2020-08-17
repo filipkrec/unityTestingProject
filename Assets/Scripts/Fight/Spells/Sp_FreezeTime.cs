@@ -14,7 +14,6 @@ public class Sp_FreezeTime : C_Spell
         manaCost = 5.0f;
         cooldown = 15.0f;
         effectiveness = 1.0f;
-        target = Globals.GetClash();
     }
 
     public override void Cast()
@@ -23,9 +22,7 @@ public class Sp_FreezeTime : C_Spell
         {
             useResources();
 
-            Debug.Assert(target is C_Clash);
-
-            C_Clash thisTarget = (C_Clash)target;
+            C_Clash thisTarget = Globals.GetClash();
 
             Mod_FreezeTime mod = new Mod_FreezeTime(5.0f);
 

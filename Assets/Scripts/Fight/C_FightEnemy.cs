@@ -2,22 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_FightEnemy : C_Modifiable
+public class C_FightEnemy : C_Modifiable, IModifiable
 {
     protected List<KeyValuePair<C_Spell, float>> spellSequence;
-    C_Timer timer;
+    protected C_Timer timer;
 
     public int pushForce = 5;
     public int pushAttack;
     public int pushDefence;
     List<C_Modifier> spellModifiers;
 
-    C_FightEnemyBackup backup;
+    public C_FightEnemyBackup backup;
 
-    public void Start()
+    public virtual void Start()
     {
         tooltipStartingPosition = new Vector2(200f, 0f);
         nextTooltipPositionDifference = new Vector2(0f, 20f);
+
+        backup = new C_FightEnemyBackup();
+    }
+
+    public virtual void Update()
+    {
+
+    }
+    public override void unmodifyValues()
+    {
+        if(backup.PushForceModified)
+        pushForce = backup.PushForce;
     }
 
     /*
@@ -52,7 +64,6 @@ public class C_FightEnemyBackup
     public bool PushDefenceModified { get => pushDefenceModified; }
     public int PushDefence { get => pushDefence; set { pushDefence = value; pushDefenceModified = true; } }
 }
-
 
 /*  ENEMY 1
     BUFF -> GIVES + 1 PUSH POWER PER STACK    

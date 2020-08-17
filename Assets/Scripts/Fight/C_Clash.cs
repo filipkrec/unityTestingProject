@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class C_Clash : C_ModifiableMono, IModifiable
     public bool isRateConstant;
     public float rateConstant;
 
+    public float clash;
     public float currentClash;
 
     C_Timer fightTimer;
@@ -20,7 +22,8 @@ public class C_Clash : C_ModifiableMono, IModifiable
 
     private void Start()
     {
-        currentClash = 50;
+        clash = 50;
+        currentClash = clash;
 
         rateModifier = 1.0f;
         isRateConstant = false;
@@ -36,15 +39,15 @@ public class C_Clash : C_ModifiableMono, IModifiable
 
     private void Update()
     {
-        slider.value += rate * 60 * Time.smoothDeltaTime;
+        currentClash += Math.Min(rate * 60 * Time.smoothDeltaTime,0.3f);
+        slider.value = currentClash;
     }
 
     private void calculateClash()
     {
-        float oldval = currentClash;
-        currentClash += (float)(Globals.GetPlayer().pushForce - Globals.GetEnemy().pushForce) * (isRateConstant ? rateConstant : rateModifier) / 60;
-        currentClash = currentClash > 100 ? 100 : currentClash < 0 ? 0 : currentClash;
-        rate = currentClash - oldval;
+        clash += (float)(Globals.GetPlayer().pushForce - Globals.GetEnemy().pushForce) * (isRateConstant ? rateConstant : rateModifier) / 60;
+        clash = clash > 100 ? 100 : clash < 0 ? 0 : clash;
+        rate = clash - currentClash;
     }
 
     public override void unmodifyValues()

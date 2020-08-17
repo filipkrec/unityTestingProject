@@ -21,19 +21,30 @@ public class Globals : MonoBehaviour
     public C_GlobalTimers Timers;
     private static C_GlobalTimers timers;
 
+    [SerializeField]
+    public List<GameObject> Prefabs = new List<GameObject>();
+    private static List<GameObject> prefabs;
+
     private void Awake()
     {
         canvas = Canvas;
         player = new C_FightPlayer();
-        enemy = new C_FightEnemy();
+        enemy = new E_GrowingTitan();
         clash = Clash;
         buttons = Buttons;
         timers = Timers;
+        prefabs = Prefabs;
     }
 
     private void Start()
     {
         player.Start();
+        enemy.Start();
+    }
+
+    private void Update()
+    {
+        enemy.Update();
     }
 
     public static C_SpellButtons GetButtons() { return buttons; }
@@ -42,6 +53,8 @@ public class Globals : MonoBehaviour
     public static C_FightEnemy GetEnemy() { return enemy; }
     public static C_Clash GetClash() { return clash; }
     public static C_GlobalTimers GetTimers() { return timers; }
+
+    public static GameObject GetPrefab(int i) { return prefabs[i]; }
 
 
 }

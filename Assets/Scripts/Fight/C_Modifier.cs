@@ -15,6 +15,7 @@ public abstract class C_Modifier
 
     public float duration; //-1 inf
     public float effectiveness;
+
     public int stacks;
 
     protected IModifiable target;
@@ -32,10 +33,10 @@ public abstract class C_Modifier
 
     public void Update()
     {
-        if (descriptionText != null && timer.GetCurrentTime() - lastDescriptionUpdateTime > 1f/60)
+        if (descriptionText != null && iconTimer != null && iconTimer.GetCurrentTime() - lastDescriptionUpdateTime > 1f/60)
         {
             descriptionText.text = GetDescription();
-            lastDescriptionUpdateTime = timer.GetCurrentTime();
+            lastDescriptionUpdateTime = iconTimer.GetCurrentTime();
         }
     }
 
@@ -43,7 +44,7 @@ public abstract class C_Modifier
     {
         if (showTooltip && modifierIcon == null)
         {
-            GameObject prefab = (GameObject)Resources.Load("ModifierIcon", typeof(GameObject));
+            GameObject prefab = Globals.GetPrefab(0); //modifierIcon prefab
             if (prefab != null)
                 modifierIcon = MonoBehaviour.Instantiate(prefab, Globals.GetCanvas().transform);
 
@@ -59,7 +60,10 @@ public abstract class C_Modifier
                         if (txt.name == "Name")
                             txt.SetText(modifierName);
                         else if (txt.name == "Description")
+                        {
                             txt.SetText(GetDescription());
+                            descriptionText = txt;
+                        }
                 }
             }
 
@@ -67,18 +71,14 @@ public abstract class C_Modifier
         }
     }
 
-    protected void RemoveSelf() 
+    public void Remove() 
     {
         iconTimer.delete = true;
+
         target.removeModifier(this);
 
         if (modifierIcon != null)
             MonoBehaviour.Destroy(modifierIcon);
-    }
-
-    public void SetTarget(IModifiable inTarget)
-    {
-        target = inTarget;
     }
 
     public virtual string GetDescription()

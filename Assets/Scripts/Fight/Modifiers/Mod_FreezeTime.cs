@@ -17,7 +17,7 @@ public class Mod_FreezeTime : C_Modifier
         effectiveness = 1.0f;
         target = Globals.GetClash();
         timer = new C_Timer();
-        timer.Instantiate(delegate { RemoveSelf(); timer.delete = true; }, duration);
+        timer.Instantiate(delegate { Remove(); timer.delete = true; }, duration);
         timer.setPrecision(1);
         lastDescriptionUpdateTime = 0.0f;
 
@@ -31,14 +31,7 @@ public class Mod_FreezeTime : C_Modifier
     {
         base.Modify();
 
-        if(modifierIcon != null)
-        foreach (Transform child in modifierIcon.GetComponentsInChildren<Transform>(true))
-        {
-            TextMeshProUGUI txt = child.GetComponentInChildren<TextMeshProUGUI>();
-
-            if (txt != null && txt.name == "Description")
-                descriptionText = txt;
-        }
+        Debug.Assert(target is C_Clash);
 
         C_Clash thisTarget = (C_Clash)target;
         thisTarget.rateConstant = 0.0f;

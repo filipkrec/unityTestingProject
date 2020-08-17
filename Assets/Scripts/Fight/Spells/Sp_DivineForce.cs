@@ -13,8 +13,6 @@ public class Sp_DivineForce : C_Spell
         cooldown = 20.0f;
         effectiveness = 1.0f;
         manaCost = 5;
-
-        target = Globals.GetPlayer();
     }
 
     public override void Cast()
@@ -23,9 +21,7 @@ public class Sp_DivineForce : C_Spell
         {
             useResources();
 
-            Debug.Assert(target is C_FightPlayer);
-
-            C_FightPlayer thisTarget = (C_FightPlayer)target;
+            C_FightPlayer thisTarget = Globals.GetPlayer();
 
             Mod_DivineForce mod = new Mod_DivineForce(10.0f + durationModifier, effectiveness);
 

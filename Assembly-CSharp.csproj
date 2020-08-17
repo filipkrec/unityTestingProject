@@ -81,13 +81,16 @@
     <Compile Include="Assets\Scripts\Fight\C_Spell.cs" />
     <Compile Include="Assets\Scripts\Fight\C_SpellButtons.cs" />
     <Compile Include="Assets\Scripts\Fight\C_TimerMono.cs" />
-    <Compile Include="Assets\Scripts\Fight\Enemies\C_TestEnemy1.cs" />
+    <Compile Include="Assets\Scripts\Fight\Enemies\E_GrowingTitan.cs" />
+    <Compile Include="Assets\Scripts\Fight\Enemies\EnemySpells\EMod_GrowthStacks.cs" />
+    <Compile Include="Assets\Scripts\Fight\Enemies\EnemySpells\Esp_PushStack.cs" />
     <Compile Include="Assets\Scripts\Fight\IModifiable.cs" />
     <Compile Include="Assets\Scripts\Fight\Modifiers\Mod_DivineForce.cs" />
     <Compile Include="Assets\Scripts\Fight\Modifiers\Mod_FreezeTime.cs" />
     <Compile Include="Assets\Scripts\Fight\MurmurHash.cs" />
     <Compile Include="Assets\Scripts\Fight\Spells\Sp_DivineForce.cs" />
     <Compile Include="Assets\Scripts\Fight\Spells\Sp_FreezeTime.cs" />
+    <Compile Include="Assets\Scripts\Fight\Spells\Sp_Push.cs" />
     <Compile Include="Assets\Scripts\Fight\Spells\TEMP_SetSpell.cs" />
     <Compile Include="Assets\Scripts\Game\C_BasicMovement.cs" />
     <Compile Include="Assets\Scripts\Game\C_CameraFollow.cs" />

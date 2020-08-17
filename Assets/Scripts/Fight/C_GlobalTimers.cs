@@ -5,11 +5,12 @@ using UnityEngine;
 public class C_GlobalTimers : MonoBehaviour
 {
     private List<C_Timer> timers;
+    private List<C_Timer> newTimers;
     private List<C_Timer> deleteTimers;
 
     public void AddTimer(C_Timer timer)
     {
-        timers.Add(timer);
+        newTimers.Add(timer);
     }
 
     public void RemoveTimer(C_Timer timer)
@@ -20,12 +21,20 @@ public class C_GlobalTimers : MonoBehaviour
     private void Awake()
     {
         timers = new List<C_Timer>();
+        newTimers = new List<C_Timer>();
         deleteTimers = new List<C_Timer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        foreach(C_Timer timer in newTimers)
+        {
+            timers.Add(timer);
+        }
+
+        newTimers.Clear();
+
         foreach(C_Timer timer in timers)
         {
             timer.Update(Time.smoothDeltaTime);

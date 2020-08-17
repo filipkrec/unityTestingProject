@@ -59,5 +59,10 @@ public class C_Modifiable
     {
         
     }
+
+    public C_Modifier getModifier<T>()
+    {
+        return modifiers.Find(x => x is T);
+    }
 }
 

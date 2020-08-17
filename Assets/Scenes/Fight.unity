@@ -662,6 +662,8 @@ MonoBehaviour:
   Canvas: {fileID: 1736994215}
   Buttons: {fileID: 1828428934}
   Timers: {fileID: 1193999949}
+  Prefabs:
+  - {fileID: 1612081556893962053, guid: efd71353b3105f44887906dec45c3c21, type: 3}
 --- !u!4 &339869375
 Transform:
   m_ObjectHideFlags: 0
