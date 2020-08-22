@@ -11,35 +11,21 @@ public class Mod_DivineForce : C_Modifier
         description = "Push Force increased by 2, mana pool reduced by 3 for ";
         icon = null;
 
-        duration = inDuration;
-        effectiveness = inEffectiveness;
-        target = Globals.GetPlayer();
-
-        timer = new C_Timer();
-        timer.Instantiate(delegate { Remove(); timer.delete = true; }, duration);
-
-        timer.setPrecision(1);
-        lastDescriptionUpdateTime = 0.0f;
-
         showTooltip = true;
 
         operation = modifierOperation.ADDITION;
         type = modifierType.DEBUFF;
+
+        duration = inDuration;
+        effectiveness = inEffectiveness;
+
+        Initialise();
     }
 
     public override void Modify()
     {
-        base.Modify();
-
-        Debug.Assert(target is C_FightPlayer);
-
-        C_FightPlayer thisTarget = (C_FightPlayer)target;
-
-        thisTarget.backup.ManaMax = thisTarget.manaMax;
-        thisTarget.manaMax -= (int)(3 * effectiveness);
-
-        thisTarget.backup.PushForce = thisTarget.pushForce;
-        thisTarget.pushForce += (int)(5 * effectiveness);
+        Globals.Player.ManaMax -= 3;
+        Globals.Player.PushForce += 5 * effectiveness;
     }
 
     public override string GetDescription()

@@ -14,7 +14,7 @@ public class C_Enemy : C_Modifiable, IModifiable
     public int pushDefence;
 
     C_EnemyBackup backup;
-    public virtual void unmodifyValues()
+    public virtual void UnmodifyValues()
     {
 
     }

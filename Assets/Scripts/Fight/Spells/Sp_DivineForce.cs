@@ -2,30 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sp_DivineForce : C_Spell
+public class Sp_DivineForce : C_InstantSpell
 {
     public Sp_DivineForce() : base()
     {
-        spellName = "Divine force";
-        description = "Stuff"; // duration.ToString(); TODO
+        spellName = "Divine force 10MP";
+        description = "Push Force increased by 2, mana pool reduced by 3 for 10s"; // duration.ToString(); TODO
         icon = null;
 
         cooldown = 20.0f;
         effectiveness = 1.0f;
-        manaCost = 5;
+        manaCost = 10;
     }
 
-    public override void Cast()
+    public override void OnCast()
     {
-        if (canUse())
-        {
-            useResources();
-
-            C_FightPlayer thisTarget = Globals.GetPlayer();
-
-            Mod_DivineForce mod = new Mod_DivineForce(10.0f + durationModifier, effectiveness);
-
-            thisTarget.addModifier(mod);
-        }
+        Globals.Player.AddModifier(new Mod_DivineForce(10.0f + durationModifier, effectiveness));
     }
 }

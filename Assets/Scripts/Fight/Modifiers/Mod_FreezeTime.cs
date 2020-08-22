@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Mod_FreezeTime : C_Modifier
 {
-
     public Mod_FreezeTime(float inDuration) : base()
     {
         modifierName = "Time Freeze";
@@ -14,29 +13,21 @@ public class Mod_FreezeTime : C_Modifier
         icon = null;
             
         duration = inDuration;
+
         effectiveness = 1.0f;
-        target = Globals.GetClash();
-        timer = new C_Timer();
-        timer.Instantiate(delegate { Remove(); timer.delete = true; }, duration);
-        timer.setPrecision(1);
-        lastDescriptionUpdateTime = 0.0f;
 
         showTooltip = true;
 
         operation = modifierOperation.OTHER;
         type = modifierType.DEBUFF;
+
+        Initialise();
     }
 
     public override void Modify()
     {
-        base.Modify();
-
-        Debug.Assert(target is C_Clash);
-
-        C_Clash thisTarget = (C_Clash)target;
-        thisTarget.rateConstant = 0.0f;
-        thisTarget.backup.RateConstant = thisTarget.isRateConstant;
-        thisTarget.isRateConstant = true;
+        Globals.Clash.rateConstant = 0.0f;
+        Globals.Clash.IsRateConstant = true;
     }
 
     public override string GetDescription()

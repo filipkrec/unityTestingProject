@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class Sp_FreezeTime : C_Spell
+public class Sp_FreezeTime : C_InstantSpell
 {
     public Sp_FreezeTime() : base()
     {
-        spellName = "Freeze Time";
+        spellName = "Freeze Time 5MP";
         description = "Time is frozen for 5s"; 
         icon = null;
 
@@ -16,17 +16,8 @@ public class Sp_FreezeTime : C_Spell
         effectiveness = 1.0f;
     }
 
-    public override void Cast()
+    public override void OnCast()
     {
-        if (canUse())
-        {
-            useResources();
-
-            C_Clash thisTarget = Globals.GetClash();
-
-            Mod_FreezeTime mod = new Mod_FreezeTime(5.0f);
-
-            thisTarget.addModifier(mod);
-        }
+        Globals.Clash.AddModifier(new Mod_FreezeTime(5.0f * effectiveness + durationModifier));
     }
 }

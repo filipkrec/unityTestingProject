@@ -2,35 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_FightPlayer : C_Modifiable, IModifiable
+public class C_FightPlayer : C_Modifiable
 {
     public int numberOfSlots = 5; 
     public C_Box[] slots;
 
-    public int manaMax = 100;
+    public int ManaMax { get => manaMax; set { if (!backup.ManaMaxModified) backup.ManaMax = manaMax; manaMax = value; } }
+    private int manaMax = 100;
+
     public int mana = 100;
-    public int pushForce = 4;
-    public int pushAttack;
-    public int pushDefence;
+    public float manaRegen = 1;
+    public float manaRegenPool = 0;
+    public float PushForce { get => pushForce; set { if(!backup.PushForceModified) backup.PushForce = pushForce; pushForce = value; } }
+    private float pushForce = 4;
+
+    public float PushAttack { get => pushAttack; set { if (!backup.PushAttackModified) backup.PushAttack = pushAttack; PushAttack = value; } }
+    private float pushAttack;
+
+    public float PushDefence { get => pushDefence; set { if (!backup.PushDefenceModified) backup.PushDefence = pushDefence; pushDefence = value; } }
+    private float pushDefence;
     List<C_Modifier> spellModifiers;
 
     public C_FightPlayerBackup backup;
 
-    /*
-     PRVO ZBRAJANJE => ODUZIMANJE => MNOZENJE => DJELJENJE
-     
-     vrj = 1;
-     modifier 1 => vrj * 2;
-     modifier 2 => vrj + 1;
-     modifier 3 => vrj * 3;
-
-     (1 + 1) * 2 * 3 
-     1 * 2 * 3
-     -----------------------------------
-     */
-
-
-    // Start is called before the first frame update
     public void Start()
     {
         tooltipStartingPosition = new Vector2(-200f, 0f);
@@ -39,7 +33,24 @@ public class C_FightPlayer : C_Modifiable, IModifiable
         backup = new C_FightPlayerBackup();
         slots = new C_Box[numberOfSlots];
         mana = manaMax;
+        Globals.OnUpdate += RegenMana;
         refreshAllButtons();
+    }
+
+    private void RegenMana()
+    {
+        if (mana < manaMax)
+        {
+            manaRegenPool += manaRegen * Time.smoothDeltaTime;
+            if (manaRegenPool > 1)
+            {
+                mana += Mathf.FloorToInt(manaRegenPool);
+                manaRegenPool -= Mathf.FloorToInt(manaRegenPool);
+            }
+        }
+        else
+            manaRegenPool = 0;
+
     }
 
     public C_Box getSlot(int i)
@@ -55,20 +66,20 @@ public class C_FightPlayer : C_Modifiable, IModifiable
     public void setSlot(int i, C_Box box)
     {
         slots[i] = box;
-        Globals.GetButtons().refreshButton(i);
+        Globals.Buttons.refreshButton(i);
     }
 
     public void refreshAllButtons()
     {
-        for (int i = 0; i < Globals.GetButtons().spellButtons.Length; ++i)
+        for (int i = 0; i < Globals.Buttons.spellButtons.Length; ++i)
         {
-            Globals.GetButtons().refreshButton(i);   
+            Globals.Buttons.refreshButton(i);   
         }
     }
 
-    public override void unmodifyValues()
+    public override void UnmodifyValues()
     {
-        if (backup.NumberOfSlotsModified)
+            if (backup.NumberOfSlotsModified)
             numberOfSlots = backup.NumberOfSlots;
         if (backup.PushForceModified)
             pushForce = backup.PushForce;
@@ -89,37 +100,34 @@ public class C_FightPlayerBackup
     int numberOfSlots;
 
     bool pushForceModified = false;
-    int pushForce;
+    float pushForce;
 
     bool pushAttackModified = false;
-    int pushAttack;
+    float pushAttack;
 
     bool pushDefenceModified = false;
-    int pushDefence;
+    float pushDefence;
 
     bool manaMaxModified = false;
     int manaMax;
 
     public bool NumberOfSlotsModified { get => numberOfSlotsModified; }
-    public int NumberOfSlots { get => numberOfSlots; set { if (!numberOfSlotsModified) numberOfSlots = value; numberOfSlotsModified = true; } }
+    public int NumberOfSlots { get { return numberOfSlots; } set { if (!numberOfSlotsModified) numberOfSlots = value; numberOfSlotsModified = true; } }
     public bool PushForceModified { get => pushForceModified; }
-    public int PushForce { get => pushForce; set { if (!pushForceModified) pushForce = value; pushForceModified = true; } }
+    public float PushForce { get { return pushForce; } set { if (!pushForceModified) pushForce = value; pushForceModified = true; } }
     public bool PushAttackModified { get => pushAttackModified; }
-    public int PushAttack { get => pushAttack; set { if (!pushAttackModified) pushAttack = value; pushAttackModified = true; } }
+    public float PushAttack { get { return pushAttack; } set { if (!pushAttackModified) pushAttack = value; pushAttackModified = true; } }
     public bool PushDefenceModified { get => pushDefenceModified; }
-    public int PushDefence { get => pushDefence; set { if (!pushDefenceModified) pushDefence = value; pushDefenceModified = true; } }
+    public float PushDefence { get { return pushDefence; } set { if (!pushDefenceModified) pushDefence = value; pushDefenceModified = true; } }
     public bool ManaMaxModified { get => manaMaxModified; }
-    public int ManaMax { get => manaMax; set { if (!manaMaxModified) manaMax = value; manaMaxModified = true; } }
-
+    public int ManaMax { get { return manaMax; } set { if (!manaMaxModified) manaMax = value; manaMaxModified = true; } }
 
     public void Reset()
     {
-         numberOfSlotsModified = false;
-        
-         pushForceModified = false;
-        
-         pushAttackModified = false;
-        
-         pushDefenceModified = false;
+        numberOfSlotsModified = false;
+        pushForceModified = false;
+        pushAttackModified = false;
+        pushDefenceModified = false;
+        manaMaxModified = false;
     }
 }

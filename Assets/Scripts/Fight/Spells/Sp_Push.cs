@@ -2,28 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sp_Push : C_Spell
+public class Sp_Push : C_InstantSpell
 {
     public Sp_Push() : base()
     {
-        spellName = "Push!";
+        effectiveness = 1.0f;
+
+        spellName = "Push! 10MP";
         description = "Push for " + effectiveness * 10;
         icon = null;
 
         manaCost = 10.0f;
         cooldown = 5.0f;
-        effectiveness = 1.0f;
     }
 
-    public override void Cast()
+    public override void OnCast()
     {
-        if (canUse())
-        {
-            useResources();
-
-            C_Clash thisTarget = Globals.GetClash();
-
-            thisTarget.clash += 10 * effectiveness;
-        }
+        Globals.Clash.Clash += 10 * effectiveness;
     }
 }

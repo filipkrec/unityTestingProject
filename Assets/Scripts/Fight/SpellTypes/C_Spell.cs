@@ -1,43 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class C_Spell : C_Modifiable, IModifiable
 {
     public string spellName;
     public string description;
     public Sprite icon;
+    public C_SpellTooltip tooltip;
 
     public float cooldown;
     public C_Timer cooldownTimer;
 
     public float effectiveness;
     public float durationModifier;
-    public float channelDuration; // -1 = inf
+
     public float manaCost; //if -1 manacost/s
 
     public int numberOfUses; // 0 = inf
     protected int currentUses;
 
     public bool passive;
-    public bool exclusiveChannel;
 
-    protected C_SpellBackup backup;
-    protected bool castInterupted;
+    protected C_SpellBackup backup = new C_SpellBackup();
 
-    public virtual void Cast(){}
+    public virtual void Cast() { }
+    public virtual void OnCast() { }
+
+    public virtual void OnSwitch(C_Box newBox = null) { }
+
+    public virtual void OnInsert(C_Box oldBox = null) { }
 
     public bool canUse()
     {
         return checkMana() && checkUses() && checkCooldown();
     }
-    protected void useResources()
+
+    protected virtual void useResources()
     {
-        Globals.GetPlayer().mana -= (int)manaCost;
+        Globals.Player.mana -= (int)manaCost;
 
-        if(numberOfUses != 0)
+        if (numberOfUses != 0)
             currentUses--;
+    }
 
+    protected virtual void setCooldown()
+    {
         if (cooldown > 0)
         {
             if (cooldownTimer == null)
@@ -63,7 +72,7 @@ public abstract class C_Spell : C_Modifiable, IModifiable
 
     protected bool checkMana()
     {
-        if (manaCost > Globals.GetPlayer().mana)
+        if (manaCost > Globals.Player.mana)
             return false;
 
         return true;
@@ -92,16 +101,20 @@ public abstract class C_Spell : C_Modifiable, IModifiable
         else
             return 0f;
     }
-    
+
     public bool isOnCooldown()
     {
-        if(cooldownTimer != null)
-        return cooldownTimer.IsRunning();
+        if (cooldownTimer != null)
+            return cooldownTimer.IsRunning();
 
         return false;
     }
+    public void setTooltip(Button button)
+    {
+        tooltip = new C_SpellTooltip(spellName, description, button);
+    }
 
-    public override void unmodifyValues()
+    public override void UnmodifyValues()
     {
         if (backup.SpellNameModified)
             spellName = backup.SpellName;
@@ -113,8 +126,6 @@ public abstract class C_Spell : C_Modifiable, IModifiable
             cooldown = backup.Cooldown;
         if (backup.EffectivenessModified)
             effectiveness = backup.Effectiveness;
-        if (backup.ChannelDurationModified)
-            channelDuration = backup.ChannelDuration;
     }
 }
 

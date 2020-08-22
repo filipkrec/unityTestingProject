@@ -34,7 +34,7 @@ public class C_Timer : C_Modifiable, IModifiable
     /// <param name="inTimeBeforeExecute"></param>
     /// <param name="inRepeats"></param>
     /// <param name="inTimeBetweenRepeat"></param>
-    public C_Timer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
+    public C_Timer(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = 0)
     {
         toExecute = inAction;
         timeBeforeExecute = inTimeBeforeExecute;
@@ -49,8 +49,8 @@ public class C_Timer : C_Modifiable, IModifiable
         sequenceTimer = false;
         delete = false;
 
-        if (Globals.GetTimers() != null)
-            Globals.GetTimers().AddTimer(this);
+        if (Globals.Timers != null)
+            Globals.Timers.AddTimer(this);
     }
 
     public void Instantiate(Action inAction, float inTimeBeforeExecute = -1, int inRepeats = 0, float inTimeBetweenRepeat = -1)
@@ -68,8 +68,8 @@ public class C_Timer : C_Modifiable, IModifiable
         sequenceTimer = false;
         delete = false;
 
-        if (Globals.GetTimers() != null)
-            Globals.GetTimers().AddTimer(this);
+        if (Globals.Timers != null)
+            Globals.Timers.AddTimer(this);
     }
 
     public C_Timer(List<KeyValuePair<Action, float>> inActionSequence)
@@ -79,8 +79,8 @@ public class C_Timer : C_Modifiable, IModifiable
         currentSequenceStep = 0;
         delete = false;
 
-        if (Globals.GetTimers() != null)
-            Globals.GetTimers().AddTimer(this);
+        if (Globals.Timers != null)
+            Globals.Timers.AddTimer(this);
     }
 
     public void Update(float deltaTime)

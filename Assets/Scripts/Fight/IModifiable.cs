@@ -4,10 +4,10 @@ using UnityEngine;
 
 public interface IModifiable
 {
-    void addModifier(C_Modifier modifier);
-    void removeModifier(C_Modifier modifier);
-    void modifyValues();
-    void unmodifyValues();
+    void AddModifier(C_Modifier modifier);
+    void RemoveModifier(C_Modifier modifier);
+    void ModifyValues();
+    void UnmodifyValues();
 
-    C_Modifier getModifier<T>();
+    C_Modifier GetModifier<T>();
 }

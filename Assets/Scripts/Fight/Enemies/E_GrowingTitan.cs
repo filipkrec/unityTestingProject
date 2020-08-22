@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class E_GrowingTitan : C_FightEnemy
@@ -7,6 +8,7 @@ public class E_GrowingTitan : C_FightEnemy
     bool triggered65;
     bool triggered80;
     bool triggered95;
+    public Image cooldown;
 
     public E_GrowingTitan()
     {
@@ -26,42 +28,44 @@ public class E_GrowingTitan : C_FightEnemy
 
     public override void Update()
     {
-        if (Globals.GetClash().currentClash > 65f && !triggered65)
+        cooldown.fillAmount = 1 - (timer.GetCurrentTime() % 5) / 5;
+
+        if (Globals.Clash.Clash > 65f && !triggered65)
         {
-            EMod_GrowthStacks stacksMod = (EMod_GrowthStacks)getModifier<EMod_GrowthStacks>();
+            EMod_GrowthStacks stacksMod = (EMod_GrowthStacks)GetModifier<EMod_GrowthStacks>();
             if (stacksMod == null)
-                addModifier(new EMod_GrowthStacks(1));
+                AddModifier(new EMod_GrowthStacks(1));
             else
                 stacksMod.stacks++;
 
             triggered65 = true;
 
-            unmodifyValues();
-            modifyValues();
+            UnmodifyValues();
+            ModifyValues();
         }
-        else if (Globals.GetClash().currentClash > 80f && !triggered80)
+        else if (Globals.Clash.Clash > 80f && !triggered80)
         {
-            EMod_GrowthStacks stacksMod = (EMod_GrowthStacks)getModifier<EMod_GrowthStacks>();
+            EMod_GrowthStacks stacksMod = (EMod_GrowthStacks)GetModifier<EMod_GrowthStacks>();
             if (stacksMod == null)
-                addModifier(new EMod_GrowthStacks(2));
+                AddModifier(new EMod_GrowthStacks(2));
             else stacksMod.stacks += 2;
 
             triggered80 = true;
 
-            unmodifyValues();
-            modifyValues();
+            UnmodifyValues();
+            ModifyValues();
         }
-        else if (Globals.GetClash().currentClash > 95f && !triggered95)
+        else if (Globals.Clash.Clash > 95f && !triggered95)
         {
-            EMod_GrowthStacks stacksMod = (EMod_GrowthStacks)getModifier<EMod_GrowthStacks>();
+            EMod_GrowthStacks stacksMod = (EMod_GrowthStacks)GetModifier<EMod_GrowthStacks>();
             if (stacksMod == null)
-                addModifier(new EMod_GrowthStacks(3));
+                AddModifier(new EMod_GrowthStacks(3));
             else stacksMod.stacks += 3;
 
             triggered95 = true;
             
-            unmodifyValues();
-            modifyValues();
+            UnmodifyValues();
+            ModifyValues();
         }
     }
 }

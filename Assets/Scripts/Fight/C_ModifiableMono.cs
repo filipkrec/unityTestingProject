@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_ModifiableMono : MonoBehaviour
+public class C_ModifiableMono : MonoBehaviour, IModifiable
 {
     private List<C_Modifier> modifiers = new List<C_Modifier>();
     private int currentOrdinal = 0;
@@ -11,23 +11,22 @@ public class C_ModifiableMono : MonoBehaviour
     protected Vector2 tooltipStartingPosition;
     protected Vector2 nextTooltipPositionDifference;
 
-    public void addModifier(C_Modifier modifier)
+    public void AddModifier(C_Modifier modifier)
     {
+        modifier.SetTarget(this);
         modifiers.Add(modifier);
         modifier.ordinal = currentOrdinal;
 
         currentOrdinal++;
-        unmodifyValues();
-        modifyValues();
+        RefreshModifiers();
     }
 
-    public void removeModifier(C_Modifier modifier)
+    public void RemoveModifier(C_Modifier modifier)
     {
         modifiers.Remove(modifier);
-        unmodifyValues();
-        modifyValues();
+        RefreshModifiers();
     }
-    public void modifyValues()
+    public void ModifyValues()
     {
         modifiers.Sort((mod1, mod2) => mod1.sortMod(mod2) ? -1 : 1);
 
@@ -37,29 +36,35 @@ public class C_ModifiableMono : MonoBehaviour
         {
             modifier.Modify();
 
-            if (modifier.ShowsTooltip())
+            if (modifier.ShowsTooltip() && modifier.tooltip != null)
             {
                 //lineup tooltips
-                modifier.repositionTooltipIcon(tooltipStartingPosition + nextTooltipPositionDifference * currentTooltipCount);
+                modifier.tooltip.setPosition(tooltipStartingPosition + nextTooltipPositionDifference * currentTooltipCount);
                 currentTooltipCount++;
             }
         }
 
         foreach (C_Modifier modifier in modifiers)
         {
-            if (modifier.ShowsTooltip())
+            if (modifier.ShowsTooltip() && modifier.tooltip != null)
             {
                 //recenter tooltips
-                modifier.moveTooltipIcon(-nextTooltipPositionDifference / 2 * currentTooltipCount);
+                modifier.tooltip.movePosition(-nextTooltipPositionDifference / 2 * currentTooltipCount);
             }
         }
     }
 
-    public virtual void unmodifyValues()
+    public virtual void UnmodifyValues()
     {
     }
 
-    public C_Modifier getModifier<T>()
+    public void RefreshModifiers()
+    {
+        UnmodifyValues();
+        ModifyValues();
+    }
+
+    public C_Modifier GetModifier<T>()
     {
         return modifiers.Find(x => x is T);
     }

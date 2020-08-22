@@ -1,17 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class EMod_GrowthStacks : C_Modifier
+public class Mod_Hatred : C_Modifier
 {
-    public EMod_GrowthStacks(int inStacks = 1) : base()
+    public Mod_Hatred(int inStacks = 1) : base()
     {
         modifierName = "Increases push power by 1 per stack";
         description = "STACKS: ";
         icon = null;
-
-        target = Globals.Enemy;
 
         effectiveness = 1.0f;
         stacks = inStacks;
@@ -26,8 +23,7 @@ public class EMod_GrowthStacks : C_Modifier
 
     public override void Modify()
     {
-        base.Modify();
-        Globals.Enemy.PushForce += stacks;
+        Globals.Player.PushForce += stacks;
     }
 
     public override string GetDescription()

@@ -87,6 +87,12 @@ public class C_DragAndDrop : MonoBehaviour
                     {
                         C_Box swappedBox = slot.fillSlot(currentBox);
 
+                        if(currentBox != null)
+                        currentBox.spell.OnSwitch(swappedBox);
+
+                        if(swappedBox != null)
+                        swappedBox.spell.OnInsert(currentBox);
+
                         if (swappedBox != null)
                         {
                             swappedBox.ResetScale();

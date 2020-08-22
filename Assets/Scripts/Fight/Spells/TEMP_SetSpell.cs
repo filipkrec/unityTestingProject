@@ -11,5 +11,6 @@ public class TEMP_SetSpell : MonoBehaviour
         backpack[0].spell = new Sp_FreezeTime();
         backpack[1].spell = new Sp_DivineForce();
         backpack[2].spell = new Sp_Push();
+        backpack[3].spell = new Sp_ChannelHate();
     }
 }

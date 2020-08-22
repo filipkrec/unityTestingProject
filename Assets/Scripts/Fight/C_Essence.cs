@@ -19,19 +19,25 @@ public class C_Essence
 
     public void modify(C_Spell spell)
     {
+
         spell.effectiveness += effectiveness;
 
         spell.cooldown += cooldown;
 
         spell.durationModifier += duration;
-        spell.channelDuration += duration;
 
         spell.manaCost += manaCost;
 
         spell.numberOfUses += numberOfUses;
 
-        Globals.GetPlayer().pushForce += pushForce;
+        Globals.Player.PushForce += pushForce;
 
-        Globals.GetClash().rateModifier += rate;
+        Globals.Clash.RateModifier += rate;
+
+        if (spell is C_ChannelSpell)
+        {
+            C_ChannelSpell channelSpell = (C_ChannelSpell)spell;
+            channelSpell.channelDuration += duration;
+        }
     }
 }

@@ -4,58 +4,98 @@ using System;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class C_Clash : C_ModifiableMono, IModifiable 
+public class C_Clash : C_ModifiableMono 
 {
     public float rate;
-    public float rateModifier;
-    public bool isRateConstant;
+
+    public float RateModifier { get => rateModifier; set { if (!backup.RateModifierModified) backup.RateModifier = rateModifier; rateModifier = value; } }
+    private float rateModifier = 1.0f;
+    private const float rateMax = 20f;
+
+    public bool IsRateConstant { get => isRateConstant; set { if (!backup.IsRateConstantModified) backup.IsRateConstant = isRateConstant; isRateConstant = value; } }
+    private bool isRateConstant = false;
+
     public float rateConstant;
 
-    public float clash;
-    public float currentClash;
+    public float Clash { 
+        get => clash; 
+        set => addClash(value - clash); 
+    }
+    private float clash = 50;
+    private float addedClash = 0;
+    private float currentAddedClash = 0;
 
     C_Timer fightTimer;
     public float sliderValue;
     public Slider slider;
+    public float originalScale;
          
     public C_FightCalculationBackup backup;
 
     private void Start()
     {
         clash = 50;
-        currentClash = clash;
-
-        rateModifier = 1.0f;
-        isRateConstant = false;
+        addedClash = 0;
+        currentAddedClash = 0;
 
         backup = new C_FightCalculationBackup();
 
         tooltipStartingPosition = new Vector2(0f, 175f);
         nextTooltipPositionDifference = new Vector2(20f, 0f);
-
-        fightTimer = new C_Timer(calculateClash, 0, -1, 1.0f / 60);
-        fightTimer.setPrecision(2);
     }
 
     private void Update()
     {
-        currentClash += Math.Min(rate * 60 * Time.smoothDeltaTime,0.3f);
-        slider.value = currentClash;
-    }
+        
+        float rate = (Globals.Player.PushForce - Globals.Enemy.PushForce) * Time.smoothDeltaTime * (isRateConstant ? rateConstant : rateModifier);
 
-    private void calculateClash()
-    {
-        clash += (float)(Globals.GetPlayer().pushForce - Globals.GetEnemy().pushForce) * (isRateConstant ? rateConstant : rateModifier) / 60;
+        if (Math.Abs(rate) > rateMax * Time.smoothDeltaTime)
+            rate = Math.Sign(rate) * rateMax * Time.smoothDeltaTime;
+
+        clash += rate + processAddedClash();
         clash = clash > 100 ? 100 : clash < 0 ? 0 : clash;
-        rate = clash - currentClash;
+        
+        slider.value = clash;
     }
 
-    public override void unmodifyValues()
+    void addClash(float val)
+    {
+        if (addedClash == 0)
+            addedClash += val;
+        else
+        {
+            addedClash = Math.Sign(addedClash) * Math.Abs(Math.Abs(addedClash) - Math.Abs(currentAddedClash)) + val;
+            currentAddedClash = 0; 
+        }
+    }
+
+    private float processAddedClash()
+    {
+        float addedRate;
+        if (Math.Sign(addedClash) != Math.Sign(addedClash) || Math.Abs(currentAddedClash) < Math.Abs(addedClash))
+        {
+            addedRate = Math.Sign(addedClash) * rateMax * Time.smoothDeltaTime - Math.Sign(addedClash) * rate;
+            currentAddedClash += addedRate;
+        }
+        else
+        {
+            addedRate = 0;
+            addedClash = 0;
+            currentAddedClash = 0;
+        }
+
+        return addedRate;
+    }
+
+    public override void UnmodifyValues()
     {
         if(backup.RateModifierModified)
         rateModifier = backup.RateModifier;
 
-        isRateConstant = backup.RateConstant;
+        if(backup.IsRateConstantModified)
+        isRateConstant = backup.IsRateConstant;
+
+        backup.Reset();
     }
 }
 
@@ -64,13 +104,14 @@ public class C_FightCalculationBackup
     private bool rateModifierModified = false;
     private float rateModifier;
 
-    private bool isRateConstantModified;
+    private bool isRateConstantModified = false;
     private bool isRateConstant;
 
     public bool RateModifierModified { get => rateModifierModified; }
-    public float RateModifier { get => rateModifier; set { if (!rateModifierModified) rateModifier = value; rateModifierModified = true; } }
+    public float RateModifier { get { return rateModifier; } set { if (!rateModifierModified) rateModifier = value; rateModifierModified = true; } }
 
-    public bool RateConstant { get => isRateConstant;  set { if (!isRateConstantModified) isRateConstant = value; isRateConstantModified = true; } }
+    public bool IsRateConstantModified { get => isRateConstantModified; }
+    public bool IsRateConstant { get { return isRateConstant; } set { if (!isRateConstantModified) isRateConstant = value; isRateConstantModified = true; } }
 
     public void Reset()
     {

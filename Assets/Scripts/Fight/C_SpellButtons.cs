@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class C_SpellButtons : MonoBehaviour
@@ -17,22 +18,19 @@ public class C_SpellButtons : MonoBehaviour
 
     public void refreshButton(int i)
     {
-        if (Globals.GetPlayer().slots[i] != null)
+        if (Globals.Player.slots[i] != null)
         {
-            C_Spell spell = Globals.GetPlayer().slots[i].spell;
+            C_Spell spell = Globals.Player.slots[i].spell;
             Debug.Assert(spell != null);
-            System.Type spellType = spell.GetType();
+
             spellButtons[i].GetComponent<Image>().sprite = spell.icon;
             spellButtons[i].onClick.AddListener(spell.Cast);
             spellButtons[i].gameObject.GetComponentInChildren<Text>().text = spell.spellName;
             spellButtons[i].gameObject.SetActive(true);
 
-            if (Globals.GetPlayer().slots[i].spell.cooldown > 0)
-            {
-                spellButtons[i].onClick.AddListener(delegate { setCooldown(i); });
-            }
+            spell.setTooltip(spellButtons[i]);
 
-            if (Globals.GetPlayer().slots[i].spell.isOnCooldown())
+            if (spell.cooldown > 0 || spell is C_ChannelSpell)
                 setCooldown(i);
         }
         else
@@ -48,7 +46,7 @@ public class C_SpellButtons : MonoBehaviour
 
     public void setCooldown(int i)
     {
-        if(Globals.GetPlayer().slots[i] != null)
+        if(Globals.Player.slots[i] != null)
         foreach (Image image in spellButtons[i].GetComponentsInChildren<Image>())
         {
             if (image.type == Image.Type.Filled)
@@ -66,7 +64,21 @@ public class C_SpellButtons : MonoBehaviour
         {
             if(cooldownImages[i] != null)
             {
-                cooldownImages[i].fillAmount = Globals.GetPlayer().slots[i].spell.getCooldownPercentage();
+                if (Globals.Player.slots[i].spell is C_ChannelSpell)
+                {
+                    C_ChannelSpell channelspell = (C_ChannelSpell)Globals.Player.slots[i].spell;
+                    if (channelspell.casting)
+                    {
+                        cooldownImages[i].fillAmount = 1f;
+                        cooldownImages[i].color = Color.red;
+                        continue;
+                    }
+                }
+
+                if(cooldownImages[i].color == Color.red)
+                cooldownImages[i].color = new Color(183, 183, 183);
+
+                cooldownImages[i].fillAmount = Globals.Player.slots[i].spell.getCooldownPercentage();
             }
         }
     }

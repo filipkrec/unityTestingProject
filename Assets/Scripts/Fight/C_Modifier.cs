@@ -7,15 +7,17 @@ using TMPro;
 
 public abstract class C_Modifier
 {
+    protected bool showTooltip;
+    public C_Tooltip tooltip;
+
     public string modifierName;
     public string description;
     public Sprite icon;
 
-    protected bool showTooltip;
-
-    public float duration; //-1 inf
+    public float duration; //<= 0 inf
     public float effectiveness;
 
+    public bool stackable;
     public int stacks;
 
     protected IModifiable target;
@@ -23,67 +25,37 @@ public abstract class C_Modifier
     public modifierType type;
     public int ordinal;
 
-
-    protected TextMeshProUGUI descriptionText;
-    protected float lastDescriptionUpdateTime;
-
-    protected GameObject modifierIcon;
     public C_Timer timer;
-    public C_Timer iconTimer;
-
-    public void Update()
-    {
-        if (descriptionText != null && iconTimer != null && iconTimer.GetCurrentTime() - lastDescriptionUpdateTime > 1f/60)
-        {
-            descriptionText.text = GetDescription();
-            lastDescriptionUpdateTime = iconTimer.GetCurrentTime();
-        }
-    }
 
     public virtual void Modify() 
     {
-        if (showTooltip && modifierIcon == null)
-        {
-            GameObject prefab = Globals.GetPrefab(0); //modifierIcon prefab
-            if (prefab != null)
-                modifierIcon = MonoBehaviour.Instantiate(prefab, Globals.GetCanvas().transform);
-
-            if (modifierIcon != null)
-            {
-                modifierIcon.GetComponent<Image>().sprite = icon;
-                foreach (Transform child in modifierIcon.GetComponentsInChildren<Transform>())
-                {
-
-                    TextMeshProUGUI txt = child.GetComponentInChildren<TextMeshProUGUI>();
-
-                    if (txt != null)
-                        if (txt.name == "Name")
-                            txt.SetText(modifierName);
-                        else if (txt.name == "Description")
-                        {
-                            txt.SetText(GetDescription());
-                            descriptionText = txt;
-                        }
-                }
-            }
-
-            iconTimer = new C_Timer(Update, 0f, -1);
-        }
     }
 
-    public void Remove() 
-    {
-        iconTimer.delete = true;
-
-        target.removeModifier(this);
-
-        if (modifierIcon != null)
-            MonoBehaviour.Destroy(modifierIcon);
+    public void Remove()
+    { 
+        target.RemoveModifier(this);
+        if(tooltip != null)
+            tooltip.Destroy();
     }
 
     public virtual string GetDescription()
     {
         return description;
+    }
+
+    public void Initialise()
+    {
+        if (duration > 0)
+        {
+            timer = new C_Timer();
+            timer.Instantiate(delegate { Remove(); timer.delete = true; }, duration);
+            timer.setPrecision(1);
+        }
+
+        if (showTooltip)
+        {
+            tooltip = new C_Tooltip(this, modifierName, description, icon);
+        }
     }
 
     public bool sortMod(C_Modifier other) //true => prije, false => poslje
@@ -104,7 +76,7 @@ public abstract class C_Modifier
                 break;
         }
 
-                return this.ordinal > other.ordinal;
+                return ordinal > other.ordinal;
     }
 
     public bool ShowsTooltip()
@@ -112,17 +84,12 @@ public abstract class C_Modifier
         return showTooltip;
     }
 
-    public void repositionTooltipIcon(Vector2 newPosition)
+    public void SetTarget(IModifiable mod)
     {
-        if (modifierIcon != null)
-            modifierIcon.transform.localPosition = newPosition;
+        target = mod;
     }
 
-    public void moveTooltipIcon(Vector2 moveFor)
-    {
-        if (modifierIcon != null)
-            modifierIcon.transform.localPosition += new Vector3(moveFor.x,moveFor.y);
-    }
+    public virtual bool ReplaceOnAdd(C_Modifier other) { return true; }
 }
 
 public enum modifierType {
@@ -148,7 +115,7 @@ public enum modifierOperation
 
         duration = inDuration;
         effectiveness = inEffectiveness;
-        target = Globals.GetPlayer();
+        target = Globals.Player;
 
         timer = new C_Timer();
         timer.Instantiate(delegate { RemoveSelf(); timer.deleteTimer(); }, duration);

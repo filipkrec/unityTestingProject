@@ -1,18 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 
 public class C_GetMana : MonoBehaviour
 {
-    TextMeshProUGUI txt;
-    
+    [SerializeField]
+    public TextMeshProUGUI txtMana;
+
+    [SerializeField]
+    public TextMeshProUGUI txtPlayerForce;
+
+    [SerializeField]
+    public TextMeshProUGUI txtEnemyForce;
+
     private void Start()
     {
-            txt = gameObject.GetComponent<TextMeshProUGUI>();
     }
     void Update()
     {
-        txt.SetText(Globals.GetPlayer().mana.ToString());
+        txtMana.SetText(Globals.Player.mana.ToString());
+        txtPlayerForce.SetText(Math.Round(Globals.Player.PushForce, 2).ToString());
+        txtEnemyForce.SetText(Math.Round(Globals.Enemy.PushForce, 2).ToString());
     }
 }
