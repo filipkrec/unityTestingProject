@@ -18,12 +18,16 @@ public class C_SpellTooltip : MonoBehaviour
 
             if (txt != null)
                 if (txt.name == "Name")
+                {
                     txt.SetText(name);
+                }
                 else if (txt.name == "Description")
+                {
                     txt.SetText(description);
+                }
         }
 
-        tooltipObject.name = name + "tooltip";
+        LayoutRebuilder.ForceRebuildLayoutImmediate(tooltipObject.GetComponent<RectTransform>());
     }
 
     public void activate()

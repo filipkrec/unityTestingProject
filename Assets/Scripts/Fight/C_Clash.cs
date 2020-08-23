@@ -46,6 +46,7 @@ public class C_Clash : C_ModifiableMono
 
     private void Update()
     {
+        if (Globals.paused) return;
         
         float rate = (Globals.Player.PushForce - Globals.Enemy.PushForce) * Time.smoothDeltaTime * (isRateConstant ? rateConstant : rateModifier);
 

@@ -28,6 +28,8 @@ public class C_GlobalTimers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Globals.paused) return;
+
         foreach(C_Timer timer in newTimers)
         {
             timers.Add(timer);

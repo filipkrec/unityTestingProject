@@ -15,19 +15,24 @@ public class C_DragAndDrop : MonoBehaviour
         mousePos.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
         mousePos.y = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
 
-        if (Input.GetMouseButtonDown(0) && draggedObject == null)
+        if (Input.GetMouseButtonDown(0) && draggedObject == null && !Globals.paused)
         {
             PickupGem();
         }
 
-        if (draggedObject != null)
+        if (draggedObject != null && !Globals.paused)
         {
             draggedObject.transform.position = mousePos;
         }
 
-        if (Input.GetMouseButtonUp(0) && draggedObject != null)
+        if (Input.GetMouseButtonUp(0) && draggedObject != null || Globals.paused && draggedObject != null)
         {
             DropGem();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Globals.Pause();
         }
     }
 

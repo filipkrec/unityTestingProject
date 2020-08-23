@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 using UnityEngine;
+using TMPro;
 
 public class Globals : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class Globals : MonoBehaviour
 
     private static C_FightEnemy enemy;
     public Image enemyCooldown;
+    public TextMeshProUGUI enemyName;
+    public TextMeshProUGUI enemyDescription;
+    public TextMeshProUGUI PauseText;
+    private static TextMeshProUGUI pauseText;
 
     public C_Clash ClashIn;
     private static C_Clash clash;
@@ -29,6 +34,8 @@ public class Globals : MonoBehaviour
 
     public static Action OnUpdate = delegate{ } ;
 
+    public static bool paused = false;
+
     private void Awake()
     {
         canvas = CanvasIn;
@@ -38,23 +45,36 @@ public class Globals : MonoBehaviour
         buttons = ButtonsIn;
         timers = TimersIn;
         prefabs = PrefabsIn;
+
+        pauseText = PauseText;
     }
 
     private void Start()
     {
         player.Start();
-        enemy.Start();
         if(enemy is E_GrowingTitan)
         {
             E_GrowingTitan tempEnemy = (E_GrowingTitan)enemy;
             tempEnemy.cooldown = enemyCooldown;
+            enemy.tmpName = enemyName;
+            enemy.tmpDescription = enemyDescription;
         }
+        enemy.Start();
     }
 
     private void Update()
     {
+        if (paused) return;
+
         enemy.Update();
         OnUpdate();
+    }
+
+    public static void Pause()
+    {
+        paused = !paused;
+        buttons.Pause();
+        pauseText.enabled = !pauseText.enabled;
     }
 
     public static C_SpellButtons Buttons { get { return buttons; } }

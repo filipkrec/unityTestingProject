@@ -82,4 +82,12 @@ public class C_SpellButtons : MonoBehaviour
             }
         }
     }
+
+    public void Pause()
+    {
+        foreach(Button button in spellButtons)
+        {
+            button.interactable = !button.interactable;
+        }
+    }
 }

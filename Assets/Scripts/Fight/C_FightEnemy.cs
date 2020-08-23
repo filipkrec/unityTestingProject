@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class C_FightEnemy : C_Modifiable
 {
     protected List<KeyValuePair<C_Spell, float>> spellSequence;
     protected C_Timer timer;
+    public TextMeshProUGUI tmpName;
+    protected string name;
+    public TextMeshProUGUI tmpDescription;
+    protected string description;
 
     public float PushForce { get => pushForce; set { if (!backup.PushForceModified) backup.PushForce = pushForce; pushForce = value; } }
     private float pushForce = 5;
@@ -26,6 +31,9 @@ public class C_FightEnemy : C_Modifiable
         nextTooltipPositionDifference = new Vector2(0f, 20f);
 
         backup = new C_FightEnemyBackup();
+
+        tmpName.text = name;
+        tmpDescription.text = description;
     }
 
     public virtual void Update() { }

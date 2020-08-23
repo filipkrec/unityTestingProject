@@ -12,6 +12,12 @@ public class E_GrowingTitan : C_FightEnemy
 
     public E_GrowingTitan()
     {
+        name = "Growing Titan";
+        description = "<font=\"Anton SDF\">Cry of Nature 5s</font> \n" +
+                      "<font=\"Bangers SDF\">When Stronger</font>: Generates strength and freezes time.\n" +
+                      "<font=\"Bangers SDF\">When Weaker</font>: Pushes forward and loses strength.";
+       
+
         triggered65 = false;
         triggered80 = false;
         triggered95 = false;
