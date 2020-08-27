@@ -11,12 +11,11 @@ public class Sp_DivineForce : C_InstantSpell
         icon = null;
 
         cooldown = 20.0f;
-        effectiveness = 1.0f;
         manaCost = 10;
     }
 
     public override void OnCast()
     {
-        Globals.Player.AddModifier(new Mod_DivineForce(10.0f + durationModifier, effectiveness));
+        Globals.Player.AddModifier(new Mod_DivineForce(durationModified(10f), effectiveness));
     }
 }

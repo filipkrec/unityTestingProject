@@ -13,9 +13,9 @@ public class E_GrowingTitan : C_FightEnemy
     public E_GrowingTitan()
     {
         name = "Growing Titan";
-        description = "<font=\"Anton SDF\">Cry of Nature 5s</font> \n" +
-                      "<font=\"Bangers SDF\">When Stronger</font>: Generates strength and freezes time.\n" +
-                      "<font=\"Bangers SDF\">When Weaker</font>: Pushes forward and loses strength.";
+        description = "<font=\"Bangers SDF\"><size=120%><cspace=0.1em><color=#BF8732>Cry of Nature 5s</cspace></size></color></font> \n" +
+                      "<font=\"Anton SDF\">When Stronger</font> Generates strength and freezes time.\n" +
+                      "<font=\"Anton SDF\">When Weaker</font> Pushes forward and loses strength.";
        
 
         triggered65 = false;

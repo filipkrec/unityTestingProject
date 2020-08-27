@@ -5,39 +5,32 @@ using UnityEngine;
 public class C_Essence 
 {
     //spell
-    public float effectiveness;
-    public int cooldown;
-    public int duration;
-    public int manaCost;
-    public int numberOfUses;
+    public float effectiveness = 0;
+    public float cooldownReduction = 0;
+    public float durationModifier = 0;
+    public float manaCostReduction = 0;
+    public int numberOfUses = 0;
 
     //player
-    public int pushForce;
+    public float pushForce = 0;
 
     //clash
-    public int rate;
+    public float rate = 0;
 
     public void modify(C_Spell spell)
     {
+        spell.bonus.effectiveness += effectiveness;
 
-        spell.effectiveness += effectiveness;
+        spell.bonus.cooldownReduction += cooldownReduction;
 
-        spell.cooldown += cooldown;
+        spell.bonus.durationModifier += durationModifier;
 
-        spell.durationModifier += duration;
+        spell.bonus.manaCostReduction +=  manaCostReduction;
 
-        spell.manaCost += manaCost;
+        spell.bonus.numberOfUses += numberOfUses;
 
-        spell.numberOfUses += numberOfUses;
+        spell.bonus.pushForce += pushForce;
 
-        Globals.Player.PushForce += pushForce;
-
-        Globals.Clash.RateModifier += rate;
-
-        if (spell is C_ChannelSpell)
-        {
-            C_ChannelSpell channelSpell = (C_ChannelSpell)spell;
-            channelSpell.channelDuration += duration;
-        }
+        spell.bonus.rate += rate;
     }
 }

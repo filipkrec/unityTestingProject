@@ -6,8 +6,6 @@ public class Sp_Push : C_InstantSpell
 {
     public Sp_Push() : base()
     {
-        effectiveness = 1.0f;
-
         spellName = "Push! 10MP";
         description = "Push for " + effectiveness * 10;
         icon = null;

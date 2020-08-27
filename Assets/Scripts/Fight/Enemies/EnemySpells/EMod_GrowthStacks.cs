@@ -18,8 +18,8 @@ public class EMod_GrowthStacks : C_Modifier
 
         showTooltip = true;
 
-        operation = modifierOperation.OTHER;
-        type = modifierType.DEBUFF;
+        operation = modifierOperation.ADDITION;
+        type = modifierType.BUFF;
 
         Initialise();
     }

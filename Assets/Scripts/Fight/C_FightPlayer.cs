@@ -65,6 +65,7 @@ public class C_FightPlayer : C_Modifiable
 
     public void setSlot(int i, C_Box box)
     {
+        Globals.essencesModPlayer.Refresh(box, slots[i]);
         slots[i] = box;
         Globals.Buttons.refreshButton(i);
     }
@@ -79,7 +80,7 @@ public class C_FightPlayer : C_Modifiable
 
     public override void UnmodifyValues()
     {
-            if (backup.NumberOfSlotsModified)
+        if (backup.NumberOfSlotsModified)
             numberOfSlots = backup.NumberOfSlots;
         if (backup.PushForceModified)
             pushForce = backup.PushForce;

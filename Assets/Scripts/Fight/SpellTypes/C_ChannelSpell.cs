@@ -5,7 +5,10 @@ using UnityEngine;
 public class C_ChannelSpell : C_Spell
 {
     public float channelDuration = -1f; // -1 = inf
+    private float channelDurationModified { get => channelDuration + channelDuration * bonus.durationModifier; }
+
     public float channelManaCost = 0f;
+    private float channelManaCostModified { get => channelManaCost - channelManaCost * bonus.manaCostReduction; }
     public float channelFrequency = 1f;
     public bool exclusiveChannel = false;
 
@@ -38,9 +41,9 @@ public class C_ChannelSpell : C_Spell
 
     private void ChannelCast()
     {
-        if (Globals.Player.mana > channelManaCost)
+        if (Globals.Player.mana > channelManaCostModified)
         {
-            Globals.Player.mana -= (int)channelManaCost;
+            Globals.Player.mana -= (int)channelManaCostModified;
         }
         else
         {
@@ -53,7 +56,7 @@ public class C_ChannelSpell : C_Spell
 
     public bool hasChannelCost()
     {
-        return Globals.Player.mana > channelManaCost;
+        return Globals.Player.mana > channelManaCostModified;
     }
 
     private void ChannelStartCast()
@@ -67,7 +70,7 @@ public class C_ChannelSpell : C_Spell
         {
             if (shutdownTimer == null)
             {
-                C_Timer shutdownTimer = new C_Timer(channelTimer.StopTimer, channelDuration);
+                C_Timer shutdownTimer = new C_Timer(channelTimer.StopTimer, channelDurationModified);
             }
         }
 

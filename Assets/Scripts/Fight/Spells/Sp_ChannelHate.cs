@@ -14,7 +14,6 @@ public class Sp_ChannelHate : C_ChannelSpell
 
         manaCost = 0f;
         cooldown = 2f;
-        effectiveness = 1.0f;
     }
 
     public override void OnChannelCast()

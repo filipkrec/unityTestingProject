@@ -15,8 +15,8 @@ public class Mod_Hatred : C_Modifier
 
         showTooltip = true;
 
-        operation = modifierOperation.OTHER;
-        type = modifierType.DEBUFF;
+        operation = modifierOperation.ADDITION;
+        type = modifierType.BUFF;
 
         Initialise();
     }

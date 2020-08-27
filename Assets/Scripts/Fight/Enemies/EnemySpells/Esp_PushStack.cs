@@ -12,14 +12,13 @@ public class Esp_PushStack : C_InstantSpell
 
         manaCost = 0f;
         cooldown = 0f;
-        effectiveness = 1.0f;
     }
 
     public override void OnCast()
     {
         EMod_GrowthStacks stacksMod = (EMod_GrowthStacks)Globals.Enemy.GetModifier<EMod_GrowthStacks>();
 
-        if (Globals.Enemy.PushForce < Globals.Player.PushForce)
+        if (Globals.Enemy.PushForce <= Globals.Player.PushForce)
         {
             if (stacksMod != null)
             {
@@ -38,9 +37,10 @@ public class Esp_PushStack : C_InstantSpell
                 stacksMod.stacks -= stacksMod.stacks / 2;
                 Globals.Enemy.RefreshModifiers();
 
-                if(stacksMod.stacks <= 1)
-                stacksMod.Remove();
+                if (stacksMod.stacks <= 1)
+                    stacksMod.Remove();
             }
+
         }
     }
 }

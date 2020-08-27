@@ -1,21 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class C_ShowTooltipText : MonoBehaviour
+public class C_ShowTooltipTextBox : MonoBehaviour
 {
     private void Start()
-    {
-        Deactivate();
-    }
-
-    private void OnMouseOver()
-    {
-        Activate();
-    }
-
-    private void OnMouseExit()
     {
         Deactivate();
     }

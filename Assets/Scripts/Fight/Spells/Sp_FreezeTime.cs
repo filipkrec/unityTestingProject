@@ -13,11 +13,10 @@ public class Sp_FreezeTime : C_InstantSpell
 
         manaCost = 5.0f;
         cooldown = 15.0f;
-        effectiveness = 1.0f;
     }
 
     public override void OnCast()
     {
-        Globals.Clash.AddModifier(new Mod_FreezeTime(5.0f * effectiveness + durationModifier));
+        Globals.Clash.AddModifier(new Mod_FreezeTime(durationModified(5.0f)));
     }
 }

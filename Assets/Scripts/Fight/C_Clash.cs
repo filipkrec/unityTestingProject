@@ -57,6 +57,17 @@ public class C_Clash : C_ModifiableMono
         clash = clash > 100 ? 100 : clash < 0 ? 0 : clash;
         
         slider.value = clash;
+
+        if (clash == 0)
+        {
+            Globals.pauseText.text = "<color=#ff0000>GAME OVER</color>";
+            Globals.Pause();
+        }
+        else if (clash == 100)
+        {
+            Globals.pauseText.text = "<color=#00ff00>GAME WON</color>";
+            Globals.Pause();
+        }
     }
 
     void addClash(float val)

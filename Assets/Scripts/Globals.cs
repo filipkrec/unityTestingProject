@@ -9,12 +9,16 @@ public class Globals : MonoBehaviour
 {
     private static C_FightPlayer player;
 
+    public static Mod_Essence_Player essencesModPlayer;
+    public static Mod_Essence_Clash essencesModClash;
+    //private static Mod_Essence_Enemy essencesModPlayer;
+
     private static C_FightEnemy enemy;
     public Image enemyCooldown;
     public TextMeshProUGUI enemyName;
     public TextMeshProUGUI enemyDescription;
     public TextMeshProUGUI PauseText;
-    private static TextMeshProUGUI pauseText;
+    public static TextMeshProUGUI pauseText;
 
     public C_Clash ClashIn;
     private static C_Clash clash;
@@ -36,14 +40,30 @@ public class Globals : MonoBehaviour
 
     public static bool paused = false;
 
+    public TextMeshProUGUI FPS;
+    private static TextMeshProUGUI fps;
+    private static int fpsCounter = 0;
+    private static float fpsTime;
+
     private void Awake()
     {
+        Application.targetFrameRate = -1;
+        QualitySettings.vSyncCount = 0;
+
+        fps = FPS;
+
         canvas = CanvasIn;
+
         player = new C_FightPlayer();
+
         enemy = new E_GrowingTitan();
+
         clash = ClashIn;
+
         buttons = ButtonsIn;
+
         timers = TimersIn;
+
         prefabs = PrefabsIn;
 
         pauseText = PauseText;
@@ -51,8 +71,12 @@ public class Globals : MonoBehaviour
 
     private void Start()
     {
+        paused = false;
         player.Start();
-        if(enemy is E_GrowingTitan)
+        essencesModPlayer = new Mod_Essence_Player();
+        player.AddModifier(essencesModPlayer);
+
+        if (enemy is E_GrowingTitan)
         {
             E_GrowingTitan tempEnemy = (E_GrowingTitan)enemy;
             tempEnemy.cooldown = enemyCooldown;
@@ -68,6 +92,16 @@ public class Globals : MonoBehaviour
 
         enemy.Update();
         OnUpdate();
+
+        fpsCounter++;
+        fpsTime += Time.smoothDeltaTime;
+
+        if (fpsTime >= 1.0f)
+        {
+            fps.text = fpsCounter.ToString();
+            fpsCounter = 0;
+            fpsTime = 0f;
+        }
     }
 
     public static void Pause()

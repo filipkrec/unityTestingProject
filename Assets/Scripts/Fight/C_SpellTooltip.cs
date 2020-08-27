@@ -28,6 +28,7 @@ public class C_SpellTooltip : MonoBehaviour
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(tooltipObject.GetComponent<RectTransform>());
+        Physics2D.SyncTransforms();
     }
 
     public void activate()

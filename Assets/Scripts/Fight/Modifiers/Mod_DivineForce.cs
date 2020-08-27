@@ -25,7 +25,7 @@ public class Mod_DivineForce : C_Modifier
     public override void Modify()
     {
         Globals.Player.ManaMax -= 3;
-        Globals.Player.PushForce += 5 * effectiveness;
+        Globals.Player.PushForce += 2 * effectiveness;
     }
 
     public override string GetDescription()

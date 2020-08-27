@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class C_DragAndDrop : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class C_DragAndDrop : MonoBehaviour
     private Vector2 originalPos;
     public C_FightPlayer player;
 
+    public Camera main;
+    public C_Box hoveredGem;
+
     // Update is called once per frame
     void Update()
     {
-        mousePos.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-        mousePos.y = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+        mousePos.x = main.ScreenToWorldPoint(Input.mousePosition).x;
+        mousePos.y = main.ScreenToWorldPoint(Input.mousePosition).y;
 
         if (Input.GetMouseButtonDown(0) && draggedObject == null && !Globals.paused)
         {
@@ -34,7 +38,50 @@ public class C_DragAndDrop : MonoBehaviour
         {
             Globals.Pause();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if(Globals.paused)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        MouseOverGem();
     }
+
+    void MouseOverGem()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero, 1.0f);
+        for (int i = 0; i < hits.Length; ++i)
+        {
+            if (hits[i].collider.tag == "Gem")
+            {
+                if (hits[i].transform.gameObject.GetComponent<C_Box>() != hoveredGem)
+                {
+                    if(hoveredGem != null)
+                    {
+                        hoveredGem.MouseOut();
+                        hoveredGem = null;
+                    }
+
+                    hoveredGem = hits[i].transform.gameObject.GetComponent<C_Box>();
+                    hoveredGem.MouseIn();
+                }
+                return;
+            }
+        }
+
+        if (hoveredGem != null)
+        {
+            hoveredGem.MouseOut();
+            hoveredGem = null;
+        }
+    }
+
 
     void PickupGem()
     {
@@ -55,6 +102,7 @@ public class C_DragAndDrop : MonoBehaviour
                     {
                         currentBox.ResetScale();
                         draggedObject = currentBox.gameObject;
+                        draggedObject.GetComponent<C_Box>().onStartDrag();
                     }
                     return;
                 }
@@ -67,6 +115,7 @@ public class C_DragAndDrop : MonoBehaviour
             if (hits[i].collider.tag == "Gem")
             {
                 draggedObject = hits[i].transform.gameObject;
+                draggedObject.GetComponent<C_Box>().onStartDrag();
                 return;
             }
         }
@@ -104,8 +153,11 @@ public class C_DragAndDrop : MonoBehaviour
                             swappedBox.ResetPosition();
                         }
 
-                        currentBox.transform.position = hit.collider.transform.position;
                         RescaleObjectToObjectByHitbox(currentBox.gameObject, hit.transform.gameObject);
+                        currentBox.transform.position = hit.collider.transform.position;
+
+                        currentBox.onStopDrag();
+                        hoveredGem = null;
                         draggedObject = null;
                     }
                 }
@@ -114,7 +166,7 @@ public class C_DragAndDrop : MonoBehaviour
 
         if(draggedObject != null)
         {
-            draggedObject.transform.position = currentBox.originalPosition;
+            draggedObject.GetComponent<C_Box>().ResetPosition();
             draggedObject = null;
         }
     }

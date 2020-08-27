@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Fight\C_Box.cs" />
+    <Compile Include="Assets\Scripts\Fight\C_BoxTooltip.cs" />
     <Compile Include="Assets\Scripts\Fight\C_Clash.cs" />
     <Compile Include="Assets\Scripts\Fight\C_DragAndDrop.cs" />
     <Compile Include="Assets\Scripts\Fight\C_Enemy.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Scripts\Fight\C_Modifier.cs" />
     <Compile Include="Assets\Scripts\Fight\C_ModifierStorage.cs" />
     <Compile Include="Assets\Scripts\Fight\C_ShowTooltipText.cs" />
+    <Compile Include="Assets\Scripts\Fight\C_ShowTooltipTextBox.cs" />
     <Compile Include="Assets\Scripts\Fight\C_SpellButtons.cs" />
     <Compile Include="Assets\Scripts\Fight\C_SpellTooltip.cs" />
     <Compile Include="Assets\Scripts\Fight\C_TimerMono.cs" />
@@ -87,6 +89,8 @@
     <Compile Include="Assets\Scripts\Fight\Enemies\EnemySpells\Esp_PushStack.cs" />
     <Compile Include="Assets\Scripts\Fight\IModifiable.cs" />
     <Compile Include="Assets\Scripts\Fight\Modifiers\Mod_DivineForce.cs" />
+    <Compile Include="Assets\Scripts\Fight\Modifiers\Mod_Essence_Clash.cs" />
+    <Compile Include="Assets\Scripts\Fight\Modifiers\Mod_Essence_Player.cs" />
     <Compile Include="Assets\Scripts\Fight\Modifiers\Mod_FreezeTime.cs" />
     <Compile Include="Assets\Scripts\Fight\Modifiers\Mod_Hatred.cs" />
     <Compile Include="Assets\Scripts\Fight\MurmurHash.cs" />
