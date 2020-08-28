@@ -15,12 +15,13 @@ public abstract class C_Spell : C_Modifiable, IModifiable
 
     public float manaCost; //if -1 manacost/s
     public float effectiveness { get => 1f + bonus.effectiveness; }
-    public float durationModified(float duration) { return duration + duration * bonus.durationModifier; }
-    public float manaCostModified { get => manaCost - manaCost * bonus.manaCostReduction; }
-    public float cooldownModified { get => cooldown - cooldown * bonus.cooldownReduction; }
-    public float numberOfUsesModified { get => bonus.numberOfUses + numberOfUses; }
+    public float durationModified(float duration) { return (duration + bonus.durationModifier) + (duration + bonus.durationModifier) * bonus.durationModifierPercentage; }
+    public float manaCostModified { get => manaCost - manaCost * bonus.manaCostReductionPercentage - bonus.manaCostReduction; }
+    public float cooldownModified { get => cooldown - cooldown * bonus.cooldownReductionPercentage - bonus.cooldownReduction; }
+    public float numberOfUsesModified { get => (bonus.numberOfUses + numberOfUses) + (bonus.numberOfUses + numberOfUses) * bonus.numberOfUsesPercentage; }
 
     public float pushBonus { get => bonus.pushForce; }
+    public float pushBonusPercentage { get => bonus.pushForcePercentage; }
     public float rateBonus { get => bonus.rate; }
 
 
@@ -119,12 +120,14 @@ public abstract class C_Spell : C_Modifiable, IModifiable
     }
     public void setTooltip(Button button)
     {
-        tooltip = new C_SpellTooltip(spellName, description, button);
+        tooltip = new C_SpellTooltip(spellName, description, (int)manaCostModified, button);
     }
 
     public override void UnmodifyValues()
     {
     }
+
+    public virtual void SetDescription() { }
 }
 
 public class C_SpellBackup
@@ -140,8 +143,15 @@ public class C_SpellBonus
     public float numberOfUses = 0f;
 
     public float pushForce = 0f;
-
     public float rate = 0f;
+
+    public float effectivenessPercentage = 0f;
+    public float cooldownReductionPercentage = 0f;
+    public float durationModifierPercentage = 0f;
+    public float manaCostReductionPercentage = 0f;
+    public float numberOfUsesPercentage = 0f;
+
+    public float pushForcePercentage = 0f;
 
     public C_SpellBonus()
     {

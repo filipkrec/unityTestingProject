@@ -29,6 +29,8 @@ public class C_Box : MonoBehaviour
         tooltip = new C_BoxTooltip();
         tooltip.Instantiate(this);
 
+        spell.SetDescription();
+
         Debug.Assert(tooltip != null);
     }
 

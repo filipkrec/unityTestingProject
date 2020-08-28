@@ -6,8 +6,8 @@ public class Sp_Push : C_InstantSpell
 {
     public Sp_Push() : base()
     {
-        spellName = "Push! 10MP";
-        description = "Push for " + effectiveness * 10;
+        spellName = "Push!";
+        description = "Push for 10";
         icon = null;
 
         manaCost = 10.0f;
@@ -17,5 +17,10 @@ public class Sp_Push : C_InstantSpell
     public override void OnCast()
     {
         Globals.Clash.Clash += 10 * effectiveness;
+    }
+
+    public override void SetDescription()
+    {
+        description = "Push for " + effectiveness * 10;
     }
 }

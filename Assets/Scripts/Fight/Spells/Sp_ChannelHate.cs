@@ -7,9 +7,10 @@ public class Sp_ChannelHate : C_ChannelSpell
     public Sp_ChannelHate() : base()
     {
         spellName = "Channel hate";
-        description = "While channeling +1 push power/mana cost every 2 seconds, cleared on channeling end";
+        description = "";
         channelDuration = -1;
         channelManaCost = 1;
+        channelFrequency = 1.5f;
         icon = null;
 
         manaCost = 0f;
@@ -33,7 +34,7 @@ public class Sp_ChannelHate : C_ChannelSpell
             Globals.Player.RefreshModifiers();
         }
         else
-            Globals.Player.AddModifier(new Mod_Hatred());
+            Globals.Player.AddModifier(new Mod_Hatred(effectiveness));
     }
 
     public override void OnStopChannelCast()
@@ -44,5 +45,13 @@ public class Sp_ChannelHate : C_ChannelSpell
             stacksMod.Remove();
 
         UnmodifyValues();
+    }
+
+    public override void SetDescription()
+    {
+        description = "While channeling: \n+"
+            + effectiveness + " push power every 1.5s.\n" +
+            "+" + (1f - bonus.manaCostReductionPercentage) + " mana cost every 1.5s.\n " +
+            "Cleared on channeling end";
     }
 }

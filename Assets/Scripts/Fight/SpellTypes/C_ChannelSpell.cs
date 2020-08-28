@@ -5,10 +5,10 @@ using UnityEngine;
 public class C_ChannelSpell : C_Spell
 {
     public float channelDuration = -1f; // -1 = inf
-    private float channelDurationModified { get => channelDuration + channelDuration * bonus.durationModifier; }
+    private float channelDurationModified { get => channelDuration + bonus.durationModifier + (channelDuration + bonus.durationModifier * bonus.durationModifierPercentage); }
 
     public float channelManaCost = 0f;
-    private float channelManaCostModified { get => channelManaCost - channelManaCost * bonus.manaCostReduction; }
+    private float channelManaCostModified { get => channelManaCost - channelManaCost * bonus.manaCostReductionPercentage - bonus.manaCostReduction; }
     public float channelFrequency = 1f;
     public bool exclusiveChannel = false;
 

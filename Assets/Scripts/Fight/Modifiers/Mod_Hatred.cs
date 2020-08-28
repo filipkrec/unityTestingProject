@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Mod_Hatred : C_Modifier
 {
-    public Mod_Hatred(int inStacks = 1) : base()
+    public Mod_Hatred(float effectivenessIn = 0f) : base()
     {
         modifierName = "Increases push power by 1 per stack";
         description = "STACKS: ";
         icon = null;
 
-        effectiveness = 1.0f;
-        stacks = inStacks;
+        effectiveness = effectivenessIn;
+        stacks = 1;
 
         showTooltip = true;
 
@@ -23,7 +23,7 @@ public class Mod_Hatred : C_Modifier
 
     public override void Modify()
     {
-        Globals.Player.PushForce += stacks;
+        Globals.Player.PushForce += stacks * effectiveness;
     }
 
     public override string GetDescription()

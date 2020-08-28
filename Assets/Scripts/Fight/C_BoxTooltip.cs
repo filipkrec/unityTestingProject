@@ -18,20 +18,30 @@ public class C_BoxTooltip
         string name = box.spell.spellName;
         string description = "Essences: \n";
 
-        if (box.spell.bonus.pushForce != 0)
-            description += "<color=#249D00>Push force: </color>" + box.spell.bonus.pushForce + "\n";
         if (box.spell.bonus.rate != 0)
             description += "<color=#249D00>Rate: </color>" + ToPercentage(box.spell.bonus.rate) + "\n";
+        if (box.spell.bonus.pushForce != 0)
+            description += "<color=#249D00>Push force: </color>" + box.spell.bonus.pushForce + "\n";
+        if (box.spell.bonus.pushForcePercentage != 0)
+            description += "<color=#004c9d>Push force: </color>" + ToPercentage(box.spell.bonus.pushForcePercentage) + "\n";
         if (box.spell.bonus.numberOfUses != 0)
             description += "<color=#249D00>Uses: </color>" + box.spell.bonus.numberOfUses + "\n";
+        if (box.spell.bonus.numberOfUsesPercentage != 0)
+            description += "<color=#004c9d>Uses: </color>" + ToPercentage(box.spell.bonus.numberOfUsesPercentage) + "\n";
         if (box.spell.bonus.effectiveness != 0)
             description += "<color=#249D00>Effectiveness: </color>" + ToPercentage(box.spell.bonus.effectiveness) + "\n";
         if (box.spell.bonus.manaCostReduction != 0)
-            description += "<color=#249D00>ManaCostReduction: </color>" + ToPercentage(box.spell.bonus.manaCostReduction) + "\n";
+            description += "<color=#249D00>ManaCostReduction: </color>" + box.spell.bonus.manaCostReduction + "\n";
+        if (box.spell.bonus.manaCostReductionPercentage != 0)
+            description += "<color=#004c9d>ManaCostReduction: </color>" + ToPercentage(box.spell.bonus.manaCostReductionPercentage) + "\n";
         if (box.spell.bonus.cooldownReduction != 0)
-            description += "<color=#249D00>CooldownReduction: </color>" + ToPercentage(box.spell.bonus.cooldownReduction) + "\n";
+            description += "<color=#249D00>CooldownReduction: </color>" + box.spell.bonus.cooldownReduction + "s \n";
+        if (box.spell.bonus.cooldownReductionPercentage != 0)
+            description += "<color=#004c9d>CooldownReduction: </color>" + ToPercentage(box.spell.bonus.cooldownReductionPercentage) + "\n";
         if (box.spell.bonus.durationModifier != 0)
-            description += "<color=#249D00>DurationModifier: </color>" + ToPercentage(box.spell.bonus.durationModifier) + "\n";
+            description += "<color=#249D00>DurationModifier: </color>" + box.spell.bonus.durationModifier + "s \n";
+        if (box.spell.bonus.durationModifierPercentage != 0)
+            description += "<color=#004c9d>DurationModifier: </color>" + ToPercentage(box.spell.bonus.durationModifierPercentage) + "\n";
 
         description.Remove(description.Length - 1);
 

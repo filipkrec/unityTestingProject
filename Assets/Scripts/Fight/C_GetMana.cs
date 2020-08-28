@@ -21,7 +21,7 @@ public class C_GetMana : MonoBehaviour
     void Update()
     {
         txtMana.SetText(Globals.Player.mana.ToString());
-        txtPlayerForce.SetText(Math.Round(Globals.Player.PushForce, 2).ToString());
-        txtEnemyForce.SetText(Math.Round(Globals.Enemy.PushForce, 2).ToString());
+        txtPlayerForce.SetText(Math.Round(Globals.Player.PushForce, 1).ToString());
+        txtEnemyForce.SetText(Math.Round(Globals.Enemy.PushForce, 1).ToString());
     }
 }

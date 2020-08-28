@@ -24,11 +24,11 @@ public class TEMP_SetSpell : MonoBehaviour
         backpack[1].numberOfSockets = 2;
 
         C_Essence durationEssence = new C_Essence();
-        durationEssence.durationModifier = 0.3f;
+        durationEssence.durationModifierPercentage = 0.3f;
         backpack[1].essences.Add(durationEssence);
 
         C_Essence cooldownEssence = new C_Essence();
-        cooldownEssence.cooldownReduction = 0.3f;
+        cooldownEssence.pushForcePercentage = 0.3f;
         backpack[1].essences.Add(cooldownEssence);
 
 
@@ -36,11 +36,11 @@ public class TEMP_SetSpell : MonoBehaviour
         backpack[2].numberOfSockets = 3;
 
         C_Essence cooldownEssence2 = new C_Essence();
-        cooldownEssence2.cooldownReduction = 0.2f;
+        cooldownEssence2.cooldownReduction = 0.5f;
         backpack[2].essences.Add(cooldownEssence2);
 
         C_Essence effectivenessEssence2 = new C_Essence();
-        effectivenessEssence2.effectiveness = 0.2f;
+        effectivenessEssence2.cooldownReductionPercentage = 0.2f;
         backpack[2].essences.Add(effectivenessEssence2);
 
         C_Essence effectivenessEssence3 = new C_Essence();
@@ -51,7 +51,7 @@ public class TEMP_SetSpell : MonoBehaviour
         backpack[3].numberOfSockets = 4;
 
         C_Essence cooldownEssence3 = new C_Essence();
-        cooldownEssence3.cooldownReduction = 0.1f;
+        cooldownEssence3.cooldownReductionPercentage = 0.1f;
         backpack[3].essences.Add(cooldownEssence3);
 
         C_Essence effectivenessEssence4 = new C_Essence();
@@ -59,11 +59,11 @@ public class TEMP_SetSpell : MonoBehaviour
         backpack[3].essences.Add(effectivenessEssence4);
 
         C_Essence manaCostEssence = new C_Essence();
-        manaCostEssence.manaCostReduction = 0.1f;
+        manaCostEssence.manaCostReduction = 1;
         backpack[3].essences.Add(manaCostEssence);
 
         C_Essence manaCostEssence2 = new C_Essence();
-        manaCostEssence2.manaCostReduction = 0.1f;
+        manaCostEssence2.manaCostReductionPercentage = 0.1f;
         backpack[3].essences.Add(manaCostEssence2);
     }
 }
